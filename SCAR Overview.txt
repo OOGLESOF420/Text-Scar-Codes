@@ -1,0 +1,48 @@
+Scar Overview
+Welcome to Scardoc, the dynamically generated Scar library.
+
+For those new to Scardoc here are some things to remember:
+
+Scardoc is a list of functions and enums dynamically generated whenever a new build of the game is requested.(orphaned copies do not update remotely)
+The items listed in Scardoc are not a complete list of functions, just a list of functions that have been tagged appropriately.
+Scardoc is a legacy product, and as such may include; mistakes in definitions, cut�n�paste errors, and out of date or obsolete functions.
+Functions are grouped according to general categories, but again, groupings may vary.
+When looking for a function that accomplishes a specific type of action or behavior, using your browsers �Find� feature may be of assistance.
+Examples
+
+Example 1: Understanding the Function
+
+Void SGroup_SetPlayerOwner( SGroupID sgroup, PlayerID owner )
+
+Void - represents the element the function will return, in this case, the function does not return a value.
+SGroup_SetPlayerOwner - is the function name.
+SGroupID sgroup � taken as a pair, these represent a single parameter in the function, the first SGroupID is the type of value expected and sgroup is the local name the function uses.
+An example of using this particular function would be: SGroup_SetPlayerOwner(sg_defenders, player1)
+A description will usually follow, indicating to some extent the way in which the function is intended to be utilized.
+
+Example 2: Finding the Source
+
+This very useful feature allows you to track the function to its source file and line number. When in doubt, it is sometimes useful to find the function in the code base to get a better understanding of how it works.
+
+.scar - indicates the function originates in a lua file, these are fast and easy to edit.
+.cpp - indicates the file originates in a C++ file, these must be recompiled before any edits will take effect and usually indicate a 'core' function.
+core functions - defined in code (as opposed to script), core functions often form the building blocks that scar functions are constructed from. We highly recommend leaving the altering of these files to trained professionals.
+Get Your Function On
+
+Creating your own *.scar file is fun and easy:
+
+Make a new file in any text editor
+When you save the file, give it the same name as the *.sgb file you wish to use it with(1) and save it with the extension .scar
+When you run the map in game, your scar file, and all of its functionality should be active and available.(2)
+(1) If the *.sgb file already has an associated *.scar file, it is recommended that you use the import("filename") function to call your own file instead of walking over the existing file.
+(2) Remember to use good naming conventions, Lua operates globally across all active script files. This means that your function names and variables must be unique to your file or you run the risk of conflicting accidentally with another script.
+
+When the game engine reads your *.scar file, anything in the global scope will be immediately called. This may cause problems as some functions are not meant to be used until the game has loaded up all of its components.
+
+The function Scar_AddInit( FunctionName ) can be used to kick off your script. This tells the game engine "When you are ready, call the function FunctionName first."
+
+
+
+Happy Scripting
+
+Despite its flaws, Scardoc is an excellent reference tool and we hope you enjoy using it as much as we do.

@@ -1,0 +1,3693 @@
+
+ 
+bool  Squad_CanCastAbilityOnPosition( Squad* castingSquad, ScarAbilityPBG abilityPBG, ScarPosition targetPos )
+ 	
+Test whether a squad can be ordered to do this ability on the target squad 
+
+ 
+Void  Squad_CanCastAbilityOnSGroup( SquadID caster, AbilityBlueprint ability, SGroup target_sgroup )
+ 	
+Test whether a squad can be ordered to do this ability on any member of the target SGroup 
+
+ 
+bool  Squad_CanCastAbilityOnSquad( Squad* castingSquad, ScarAbilityPBG abilityPBG, Squad* targetSquad )
+ 	
+Test whether a squad can be ordered to do this ability on the target squad 
+
+ 
+void  Squad_CancelProductionQueueItem( Squad* squad, uint32_t index )
+ 	
+Cancels an item in a production queue. Index 0 is the currently producing item. 
+
+ 
+bool  Squad_CanHold( Squad* squad )
+ 	
+Checks whether a squad can hold any squad 
+
+ 
+bool  Squad_CanInstantReinforceNow( Squad* squad )
+ 	
+Returns true if the squad is available to be reinforced 
+
+ 
+bool  Squad_CanLoadSquad( Squad* squad, Squad* loadthis, bool bCheckSquadState, bool bOverload )
+ 	
+Checks whether a squad can load another squad 
+
+ 
+bool  Squad_CanPickupSlotItem( Squad* pSquad, Entity* pEntity )
+ 	
+True if the squad can pickup the entity slot item 
+
+ 
+bool  Squad_CanRecrew( Squad* pSquad, Entity* pEntity )
+ 	
+True if the squad can recrew the entity 
+
+ 
+bool  Squad_CanSeeEntity( Squad* squad, Entity* entity )
+ 	
+Returns true if the distance between a target entity and the source squad is less than it squad's sight distance. There is no LOS or FOW check. 
+
+Try Player_CanSeeEntity() if you care about LOS or FOW.
+
+ 
+bool  Squad_CanSeeSquad( Squad* squad, Squad* target )
+ 	
+Returns true if the distance between a target squad and the source squad is less than it squad's sight distance. There is no LOS or FOW check. 
+
+Try Player_CanSeeSquad() if you care about LOS or FOW.
+
+ 
+void  Squad_ClearPostureSuggestion( Squad* squad )
+ 	
+Clears any previous posture suggestions made to a squad 
+
+ 
+void  Squad_CompleteUpgrade( Squad* pSquad, ScarUpgradePBG upgradePBG )
+ 	
+Instantly adds an upgrade to a given squad 
+
+ 
+int  Squad_Count( Squad* squad )
+ 	
+Returns the number of units currently in a squad (spawned AND despawned!!) 
+
+ 
+Squad*  Squad_CreateAndSpawnToward( ScarSquadPBG sbp, Player* player, size_t loadoutCount, ScarPosition pos, ScarPosition toward )
+ 	
+Create a squad, spawn it and assign it to a player.  
+
+This will create a squad of size 'loadoutCount' and of unit type 'unit_base' (from squad blueprint)<BR/> Note: loadoutCount will be clipped to loadoutMin and loadoutMax from the squad blueprint. A loudoutCount of zero means create the whole squad as is.
+
+ 
+void  Squad_DeSpawn( Squad* squad )
+ 	
+Despawn the entire squad at its current position. 
+
+ 
+void  Squad_Destroy( Squad* squad )
+ 	
+Remove an squad from the world and destroy it. 
+
+ 
+void  Squad_EnableProductionQueue( Squad* squad, bool enable )
+ 	
+Sets whether a squad can produce anything (including upgrades) 
+
+ 
+void  Squad_EnableSurprise( Squad* squad, bool enable )
+ 	
+Enables or disables the surprise feature on thie given squad 
+
+ 
+Entity*  Squad_EntityAt( Squad* squad, uint32_t index )
+ 	
+ZERO-BASED get of entities out of squads 
+
+ 
+void  Squad_FacePosition( Squad* squad, ScarPosition pos )
+ 	
+Set the rotation of all troopers in a squad to face the position. 
+
+The center of the squad will face the position and all other troops will use the same rotation as the from center vector.<BR/><BR/> This function works on spawned squads only.
+
+ 
+void  Squad_FaceSquad( Squad* squad1, Squad* squad2 )
+ 	
+Get 2 squads to face each other. This function works on spawned squads only. 
+
+ 
+ScarPosition  Squad_FindCover( Squad* squad, ScarPosition pos, float coverSearchRadius )
+ 	
+Tries to find cover within a certain radius of a position. If no cover is found, it returns the position used for the search. 
+
+ 
+ScarPosition  Squad_FindCoverCompareCurrent( Squad* squad, ScarPosition pos, float coverSearchRadius, float maxPathDistanceFromGoal, bool compareToCurrentCover )
+ 	
+Tries to find cover within a certain radius of a position, traveling a max distance to get there, and possibly comparing against current position's cover. If no cover is found, it returns the position used for the search. 
+
+ 
+Squad*  Squad_FromWorldID( uint32_t id )
+ 	
+Get a squad from a mission editor ID. 
+
+ 
+SquadStateID  Squad_GetActiveCommand( Squad* squad )
+ 	
+Returns the active squad command. 
+
+ 
+const char*  Squad_GetAttackPlan( Squad* squad )
+ 	
+Get name of current Squad AI attack plan 
+
+ 
+void  Squad_GetAttackTargets( Squad* squad, SGroup* group )
+ 	
+Find the squad member current or forced targets. If found, the targets squads are added to the sgroup. Entity targets like buildings are ignored 
+
+ 
+ScarSquadPBG  Squad_GetBlueprint( Squad* squad )
+ 	
+Returns the name of the squad blueprint (from the attribute editor) 
+
+ 
+ScarPosition  Squad_GetDestination( Squad* squad )
+ 	
+Returns the squad's destination, if it's moving. IMPORTANT: you must only call this function if Squad_HasDestination has returned true. 
+
+ 
+uint32_t  Squad_GetGameID( Squad* squad )
+ 	
+Returns an integer containing the unqiue squad ID for this squad. 
+
+ 
+ScarPosition  Squad_GetHeading( Squad* squad )
+ 	
+Returns the average heading of the spawned units in the squad. The heading is currently a lua table with three entries (x, y, z) 
+
+ 
+float  Squad_GetHealth( Squad* squad )
+ 	
+Returns the current health of a squad. 
+
+The current health of the squad is the total health of each entity in that squad.
+
+ 
+float  Squad_GetHealthMax( Squad* squad )
+ 	
+Returns the max health of the squad. 
+
+The max health of a squad is the max health of each entity in that squad. This means that the max health of a squad may change when entities are added or removed from the squad.<BR/><BR/>
+
+ 
+float  Squad_GetHealthPercentage( Squad* squad )
+ 	
+Returns how much of an original squad's health is left, accounting for deaths (ex: a squad of 3 riflemen would be at 50% health, since they started with 6 members) Note: This is the same percentage that the UI uses. 
+
+ 
+Entity*  Squad_GetHoldEntity( Squad* squad )
+ 	
+Get which building (entity) is the squad garrisoned 
+
+Please use Squad_IsInHold() to check first
+
+ 
+Squad*  Squad_GetHoldSquad( Squad* squad )
+ 	
+Get which vehicle (squad) is the squad garrisoned 
+
+Please use Squad_IsInHold() to check first
+
+ 
+Bool  Squad_GetInvulnerable( SquadID squad )
+ 	
+Check if the squad is invulnerable or not 
+
+ 
+int  Squad_GetInvulnerableEntityCount( Squad* squad )
+ 	
+Returns the number of invulnerable member 
+
+ 
+float  Squad_GetInvulnerableMinCap( Squad* squad )
+ 	
+Returns the highest invulnerable min cap percentage from members of the squad. 
+
+ 
+void  Squad_GetLastAttacker( Squad* squad, SGroup* group )
+ 	
+Find the last squad attacker on this squad. If found, the squad is added to the sgroup 
+
+ 
+void  Squad_GetLastAttackers( Squad* squad, SGroup* group, float timeSeconds )
+ 	
+Find the squad attackers on this squad from the last seconds specified. If found, the squads are added to the sgroup. Building attackers are ignored 
+
+ 
+void  Squad_GetLastEntityAttacker( Squad* pSquad, EGroup* pEGroup )
+ 	
+Find the last entity attacker on this squad. If found, the entity added to egroup 
+
+ 
+int  Squad_GetMax( Squad* squad )
+ 	
+Returns the max number of units allowed in the squad 
+
+ 
+size_t  Squad_GetNumSlotItem( Squad* squad, ScarSlotItemPBG pbg )
+ 	
+Get the number of slot items with the same ID that the squad has 
+
+Squad_GetNumSlotItem( squadid, item )
+
+ 
+Position  Squad_GetOffsetPosition( SquadID squad, Integer offset, Real distance )
+ 	
+Returns a position relative to a squad's current position and orientation. see LuaConsts.scar for explanation of 'offset' parameter. 
+
+ 
+const char*  Squad_GetPinnedPlan( Squad* squad )
+ 	
+Get name of current Squad AI reaction plan 
+
+ 
+Player*  Squad_GetPlayerOwner( Squad* squad )
+ 	
+Returns the Player owner of the given squad. Squad MUST NOT be owned by the world. 
+
+ 
+ScarPosition  Squad_GetPosition( Squad* squad )
+ 	
+Returns the average position of the spawned units in the squad. The position is currently a lua table with three entries (x, y, z) 
+
+ 
+ScarPosition  Squad_GetPositionDeSpawned( Squad* squad )
+ 	
+Returns the average position of the despawned AND spawned units in the squad. 
+
+ 
+const PropertyBagGroup*  Squad_GetProductionQueueItem( Squad* squad, size_t index )
+ 	
+Returns the blueprint for a production queue item with index. 
+
+ 
+int  Squad_GetProductionQueueItemType( Squad* squad, size_t index )
+ 	
+Returns the production type (PITEM_Upgrade, PITEM_Spawn, PITEM_SquadUpgrade, PITEM_SquadReinforce, PITEM_PlayerUpgrade) for a production queue item with index. 
+
+ 
+size_t  Squad_GetProductionQueueSize( Squad* squad )
+ 	
+Returns the number of items in the squad's production queue. 
+
+It is an error to call this function on a squad that does not have a production queue.<BR/> Use Squad_HasProductionQueue to check that the squad has a queue.
+
+ 
+const char*  Squad_GetReactionPlan( Squad* squad )
+ 	
+Get name of current Squad AI reaction plan 
+
+ 
+const char*  Squad_GetRetaliationPlan( Squad* squad )
+ 	
+Get name of current Squad AI retaliation plan 
+
+ 
+size_t  Squad_GetSlotItemAt( Squad* squad, size_t index )
+ 	
+Returns the ID of the slot item. Use Squad_GetSlotItemCount to determine how many slot items the squad has. The first index is 1 
+
+ 
+size_t  Squad_GetSlotItemCount( Squad* squad )
+ 	
+Returns how many slot items this squad has 
+
+ 
+LuaTable  Squad_GetSlotItemsTable( SquadID squadid )
+ 	
+Returns a table of SlotItem ID's that this squad currently owns 
+
+ 
+bool  Squad_GetSquadsHeld( Squad* squad, SGroup* sgroup )
+ 	
+Adds all squads held by 'squad' to an sgroup 
+
+ 
+float  Squad_GetSuppression( Squad* squad )
+ 	
+Check current squad suppresion level. Return value from 0 to 1 
+
+ 
+float  Squad_GetVeterancyExperience( Squad* squad )
+ 	
+Get current squad veterancy experience 
+
+ 
+size_t  Squad_GetVeterancyRank( Squad* squad )
+ 	
+Get current squad veterancy rank. 
+
+ 
+void  Squad_GiveSlotItem( Squad* squad, ScarSlotItemPBG pbg )
+ 	
+Gives a slot item to the squad. Can fail due to not enough slots left 
+
+ 
+Void  Squad_GiveSlotItemsFromTable( SquadID squadid, LuaTable itemTable )
+ 	
+Gives all slot items in a table to the squad. The table should come from Squad_GetSlotItemsTable 
+
+ 
+bool  Squad_HasActiveCommand( Squad* squad )
+ 	
+Returns true if there's an active command currently for the squad 
+
+ 
+bool  Squad_HasAnyCritical( Squad* squad )
+ 	
+Return true if any entity in the squad has any critical applied to it 
+
+ 
+Bool  Squad_HasCritical( SquadID squad, CriticalID critical )
+ 	
+Check if a squad has a critical or not 
+
+ 
+bool  Squad_HasDestination( Squad* squad )
+ 	
+Returns whether this squad is moving and has a destination 
+
+ 
+bool  Squad_HasProductionQueue( Squad* squad )
+ 	
+Returns true if a squad has a production queue. 
+
+ 
+Bool  Squad_HasSlotItem( SquadID squad, SlotItemID slotItem )
+ 	
+Check if a squad has a specific slot item 
+
+ 
+Boolean  Squad_HasTeamWeapon( SquadID squad )
+ 	
+Returns true if the squad is carrying some kind of team weapon 
+
+ 
+bool  Squad_HasUpgrade( Squad* squad, ScarUpgradePBG pbg )
+ 	
+Return true if the squad has purchased the specified upgrade. 
+
+ 
+void  Squad_IncreaseVeterancyExperience( Squad* squad, float experience, bool silent, bool applyModifiers )
+ 	
+Increase current squad veterancy experience 
+
+ 
+void  Squad_IncreaseVeterancyRank( Squad* squad, int numranks, bool silent )
+ 	
+Increase current squad veterancy rank 
+
+ 
+void  Squad_InstantSetupTeamWeapon( Squad* squad )
+ 	
+Stops current squads activity and instant setup the team weapon if they have one 
+
+ 
+bool  Squad_IsAttacking( Squad* squad, float time )
+ 	
+Returns true if any unit in the squad is attacking within the time 
+
+Time is in seconds
+
+ 
+Boolean  Squad_IsCamouflaged( SquadID squad )
+ 	
+Returns whether ANY entity in the squad is camouflaged 
+
+ 
+bool  Squad_IsDoingAbility( Squad* squad, ScarAbilityPBG pbg )
+ 	
+True if squad is currently performing the given ability 
+
+ 
+bool  Squad_IsFemale( Squad* squad )
+ 	
+Returns whether the passed in squad is female 
+
+ 
+bool  Squad_IsHoldingAny( Squad* squad )
+ 	
+Check if the squad has a hold on anything (use this on vehicles) 
+
+ 
+Boolean  Squad_IsInCover( SquadID squadId, Boolean all )
+ 	
+Returns true if ALL or ANY troopers in a squad are in cover. 
+
+Set all to true to check if all troopers are in cover or set to false to check if any.
+
+ 
+bool  Squad_IsInHoldEntity( Squad* squad )
+ 	
+Check if the squad is garrisoned in entity (building) 
+
+ 
+bool  Squad_IsInHoldSquad( Squad* squad )
+ 	
+Check if the squad is loaded in squad (vehicle 
+
+ 
+bool  Squad_IsMoving( Squad* squad )
+ 	
+Returns whether any entity in the squad is moving 
+
+ 
+bool  Squad_IsPinned( Squad* squad )
+ 	
+True if squad is currently pinned 
+
+ 
+bool  Squad_IsReinforcing( Squad* squad )
+ 	
+Returns true if the squad is currently reinforcing. This function will return false if the squad does not have a reinforce ext. 
+
+ 
+Boolean  Squad_IsRetreating( SquadID squadid )
+ 	
+Returns true if the squad is currently retreating 
+
+ 
+bool  Squad_IsSuppressed( Squad* squad )
+ 	
+True if squad is currently suppressed 
+
+ 
+bool  Squad_IsUnderAttack( Squad* squad, float time )
+ 	
+Returns true if any unit in the squad is under attack within the time 
+
+Time is in seconds
+
+ 
+bool  Squad_IsUnderAttackByPlayer( Squad* squad, Player* pAttackerOwner, float time )
+ 	
+Returns true if squad is under attack by enemy from a particular player 
+
+Time is in seconds
+
+ 
+bool  Squad_IsUnderAttackFromDirection( Squad* squad, int offset, float timeSeconds )
+ 	
+Returns true if the squad was under attack from a certain direction (8 offset types, see LuaConsts.scar) 
+
+ 
+bool  Squad_IsUpgrading( Squad* squad, ScarUpgradePBG upgrade )
+ 	
+Returns true if the squad is currently upgrading something specific. 
+
+ 
+bool  Squad_IsUpgradingAny( Squad* squad )
+ 	
+Returns true if the squad is currently upgrading anything. 
+
+ 
+bool  Squad_IsValid( uint32_t id )
+ 	
+Check if a squad with the given ID can be found in the world 
+
+ 
+void  Squad_Kill( Squad* squad )
+ 	
+Kill whole squad. Sets health to 0, and triggers death effects. 
+
+ 
+void  Squad_RemoveAbility( Squad* squad, ScarAbilityPBG ability )
+ 	
+Removes an ability that was previously added by Squad_AddAbility. You cannot remove static abilities (from AE: squad_ability_ext) 
+
+ 
+void  Squad_RemoveUpgrade( Squad* squad, ScarUpgradePBG upgrade )
+ 	
+Removes an upgrade from a squad 
+
+ 
+void  Squad_RewardActionPoints( Squad* squad, float actionPoint )
+ 	
+Give squad action points 
+
+ 
+Void  Squad_SetAnimatorState( SquadID squadid, String stateMachineName, String stateName )
+ 	
+Set animation state of a state machine for a squad Please only use this for simple animations 
+
+ 
+void  Squad_SetAttackPlan( Squad* squad, const char* planName )
+ 	
+Set overriding Squad AI attack plan  
+
+ 
+void  Squad_SetHealth( Squad* squad, float healthPercent )
+ 	
+Set the health of all units in a squad. Health must be in range [0.0, 1.0] 
+
+ 
+Void  Squad_SetInvulnerable( SquadID squad, Bool enable, Float reset_time )
+ 	
+Set invulnerability on the squad. Reset time is in seconds. If it it set, the invulnerability will expire after this time. 
+
+ 
+void  Squad_SetInvulnerableEntityCount( Squad* squad, int invEntityCount, float resetTime )
+ 	
+Make a squad invulnerable to physical damage when number of members drop to or below specified count. 
+
+resetTime is the time in seconds that vulnerability will be restored.; zero time for reset time means the buff will last forever
+
+ 
+void  Squad_SetInvulnerableMinCap( Squad* squad, float minHealthPercentage, float resetTime )
+ 	
+Make a squad invulnerable to physical damage. 
+
+resetTime is the time in seconds that vulnerability will be restored.; zero time for reset time means the buff will last forever
+
+ 
+void  Squad_SetInvulnerableToCritical( Squad* squad, bool invulnerable )
+ 	
+set invulnerability to critical effect for all entities in the entire squad. Invulnerable to critical also means that kills a entity will not have effect 
+
+ 
+void  Squad_SetMoodMode( Squad* squad, SquadCombatBehaviourExt::MoodMode mood )
+ 	
+Set soldier mood mode. 
+
+ 
+void  Squad_SetMoveType( Squad* squad, ScarMoveTypePBG movetypePBG )
+ 	
+Sets the squad's move type 
+
+ 
+void  Squad_SetPinnedPlan( Squad* squad, const char* planName )
+ 	
+Set overriding Squad AI pinned plan 
+
+ 
+void  Squad_SetPlayerOwner( Squad* squad, Player* owner )
+ 	
+Changes the owner of the given squad. 
+
+ 
+void  Squad_SetPosition( Squad* squad, ScarPosition pos, ScarPosition toward )
+ 	
+Moves the squad to an arbitrary new position 
+
+ 
+void  Squad_SetReactionPlan( Squad* squad, const char* planName )
+ 	
+Set overriding Squad AI reaction plan 
+
+ 
+void  Squad_SetRecrewable( Squad* squad, bool capturable )
+ 	
+Set entity inside the squad to be recrewable or not when it becomes abandoned 
+
+ 
+void  Squad_SetRetaliationPlan( Squad* squad, const char* planName )
+ 	
+Set overriding Squad AI idle retaliation plan 
+
+ 
+void  Squad_SetSharedProductionQueue( Squad* squad, bool shared )
+ 	
+Enables shared team production on a building (teammates can build using THEIR resources) 
+
+ 
+void  Squad_SetSuppression( Squad* squad, float percentage )
+ 	
+Set current squad suppresion level. Suppression value value from 0 to 1 
+
+ 
+void  Squad_SetVeterancyDisplayVisibility( Squad* squad, bool visible )
+ 	
+Turn on/off display of the unit portrait veterancy stars 
+
+ 
+void  Squad_SetWorldOwned( Squad* squad )
+ 	
+Makes a squad neutral 
+
+ 
+bool  Squad_Spawn( Squad* squad, ScarPosition pos )
+ 	
+Spawn the entire squad at a given position 
+
+ 
+bool  Squad_SpawnToward( Squad* squad, ScarPosition pos, ScarPosition toward )
+ 	
+Spawn the entire squad at a given position 
+
+ 
+Squad*  Squad_Split( Squad* squad, unsigned int num )
+ 	
+Split the squad into 2. The new squad size is specified by the number passed in 
+
+The new squad size is specified by the number passed in.
+
+ 
+void  Squad_StopAbility( Squad* squad, ScarAbilityPBG ability, bool bEarlyExit )
+ 	
+Abruptly stops an active ability 
+
+ 
+void  Squad_SuggestPosture( Squad* squad, unsigned posture, float duration )
+ 	
+Suggests a posture to a squad, lasting the passed duration 
+
+Posture of 0 is prone, 1 is kneel/crouch, and 2 is standing. Duration is in seconds, negative means indefinate.
+
+ 
+Void  Squad_WarpToPos( SquadID squad, Position pos )
+ 	
+Warps a squad immediately to a new position 
+
+ 
+ 
+
+ 
+
+Stats
+Functions
+
+int  Stats_BuildingsLost( const ModPlayer* player )
+ 	
+Returns how many buildings a player has lost 
+
+ 
+int  Stats_InfantryLost( const ModPlayer* player )
+ 	
+Returns how many infantry a player has lost 
+
+ 
+int  Stats_KillsTotal( const ModPlayer* player )
+ 	
+Returns a player's total kills 
+
+ 
+uint32_t  Stats_PlayerAt( size_t index )
+ 	
+Returns player id at given index 
+
+ 
+size_t  Stats_PlayerCount( Void  )
+ 	
+Returns how many players in the game 
+
+ 
+ResourceAmount  Stats_ResGathered( const ModPlayer* player )
+ 	
+Returns how many resources a player has gathered 
+
+ 
+ResourceAmount  Stats_ResSpent( const ModPlayer* player )
+ 	
+Returns how many resources a player has spent 
+
+ 
+int  Stats_SoldiersKilled( const ModPlayer* player )
+ 	
+Returns how many soldiers a player has killed 
+
+ 
+int  Stats_StructuresKilled( const ModPlayer* player )
+ 	
+Returns how many structures a player has killed 
+
+ 
+Integer  Stats_TeamTally( Integer teamindex, Function statfunction )
+ 	
+Takes a statistic function and totals up the results for all the players on a given team 
+
+ 
+int  Stats_TotalDuration( Void  )
+ 	
+Returns game time, in seconds 
+
+ 
+int  Stats_TotalSquadsLost( const ModPlayer* player )
+ 	
+Returns how many squads a playe has lost 
+
+ 
+int  Stats_UnitSoldierKills( const ModPlayer* player, ScarSquadPBG sbp )
+ 	
+Returns how many soldiers an SBP have killed. ex: how many soldiers did player2's riflemen kill? 
+
+ 
+int  Stats_UnitStructureKills( const ModPlayer* player, ScarSquadPBG sbp )
+ 	
+Returns how many structures an SBP have killed. ex: how many structures did player2's riflemen kill? 
+
+ 
+int  Stats_UnitTotalKills( const ModPlayer* player, ScarSquadPBG sbp )
+ 	
+Returns how many entities an SBP have killed. ex: how many entities did player2's riflemen kill? 
+
+ 
+int  Stats_UnitVehicleKills( const ModPlayer* player, ScarSquadPBG sbp )
+ 	
+Returns how many vehicles an SBP have killed. ex: how many vehicles did player2's riflemen kill? 
+
+ 
+int  Stats_VehiclesKilled( const ModPlayer* player )
+ 	
+Returns how many vehicles a playe has killed 
+
+ 
+int  Stats_VehiclesLost( const ModPlayer* player )
+ 	
+Returns how many vehicles a player has lost 
+
+ 
+ 
+
+ 
+
+Stinger
+Functions
+
+Void  Stinger_AddEvent( PlayerID player, MarkerID marker, EVENT eventname )
+ 	
+Add a stinger to trigger at a specific location 
+
+You must remember to set Stinger_Manager going as a rule with a regular interval
+
+ 
+Void  Stinger_AddFunction( PlayerID player, MarkerID marker, LuaFunction functionname )
+ 	
+Add a stinger to trigger at a specific location 
+
+You must remember to set Stinger_Manager going as a rule with a regular interval
+
+ 
+Void  Stinger_Remove( PlayerID player, MarkerID marker )
+ 	
+Remove all stingers triggered from a specific location 
+
+ 
+ 
+
+ 
+
+Team
+Functions
+
+Void  Team_AddResource( TeamID team, Integer resourceType, Real value )
+ 	
+Add resource to each member of a team, as opposed to just setting it. Possible resource types are RT_Manpower, RT_Munition, RT_Fuel, RT_Action  
+
+ 
+SGroupID  Team_AddSquadsToSGroup( TeamID team, String squadgroupName )
+ 	
+For the given team, get all of the squads gathered into a squadgroup of your naming.  
+
+This will add all squads for the entire team to one group. To do so for each player, iterate the team table
+
+ 
+Boolean  Team_AreSquadsNearMarker( TeamID team, MarkerID marker )
+ 	
+Returns true if ANY of a teams squads are in proximity of a marker 
+
+ 
+Boolean  Team_CanSee( TeamID teamid, EGroupID/SGroupID/EntityID/SquadId/PositionID/MarkerID item, Boolean all )
+ 	
+Returns true if a team can see ALL or ANY items 
+
+ 
+Void  Team_ClearArea( TeamID team, MarkerID marker, Bool invulnerable )
+ 	
+Any of the team's units in the marker area move out of the area, and can be made invulnerable for a bit whilst they do it 
+
+You can replace the marker with a position and a range - i.e. Team_ClearArea(team, pos, range, invulnerable)
+
+ 
+playerID, playerID, playerID, playerID  Team_DefineAllies( Void  )
+ 	
+Returns 4 playerIDs (player1, player2, player3, player4) for Humans/Allies 
+
+ 
+playerID, playerID, playerID, playerID  Team_DefineEnemies( Void  )
+ 	
+Returns 4 playerIDs (player5, player6, player7, player8) for Enemy Players 
+
+ 
+TeamID  Team_FindByRace( String race[, String race2 )
+ 	
+Returns the TeamID for a given race. See LuaConsts for constants to use. 
+
+You can pass in multiple races.
+
+ 
+Boolean  Team_ForEachAllOrAny( TeamID team, Boolean all, LuaFunction function )
+ 	
+Tests a condition on teams. Calls your function for each player. Parameters of your function: (TeamID, player index, PlayerID). Your function must return true or false to indicate whether the player meets the condition. 
+
+ 
+Void  Team_GetAll( TeamID team[, SGroupID sgroup, EGroupID egroup] )
+ 	
+Creates/Clears groups that contain all of a team's units and buildings. Defaults - sg_allsquads and eg_allentities 
+
+Fills an SGroup with all of the given team's squads, and an EGroup with all the team's entities. If you don't provide and groups, then it defaults to using sg_allsquads and eg_allentities.
+
+ 
+Void  Team_GetAllEntitiesNearMarker( TeamID team, EGroupID egroup, MarkerID/Pos/SectorID position[, Real range] )
+ 	
+Gather together all of a teams's entities that are in proximity to a marker, a position, or within a territory sector into an EGroup. The EGroup is cleared beforehand.  
+
+You can override a marker's normal proximity by specifying a range.
+
+ 
+Void  Team_GetAllSquadsNearMarker( TeamID team, SGroupID sgroup, MarkerID/Pos/SectorID position[, Real range] )
+ 	
+Gather together all of a teams's squads that are in proximity to a marker, a position, or within a territory sector into an SGroup. The SGroup is cleared beforehand.  
+
+You can override a marker's normal proximity by specifying a range.
+
+ 
+EntityID/Table  Team_GetBuildingID( PlayerID player, BlueprintTable entitytypes[, ANY bool] )
+ 	
+Returns the entityID of the first team owned building listed in the table. 
+
+This only looks at completed buildings
+
+ 
+Integer  Team_GetBuildingsCount( TeamID team )
+ 	
+Returns the total number of buildings owned by this team. 
+
+ 
+Integer  Team_GetBuildingsCountExcept( TeamID team, BlueprintTable exceptions )
+ 	
+Returns the total number of buildings owned by this team (with exclusions). 
+
+ 
+Integer  Team_GetBuildingsCountOnly( TeamID team, BlueprintTable ebplist )
+ 	
+Returns the number of buildings owned by this team (inclusive). 
+
+ 
+TeamID  Team_GetEnemyTeam( TeamID team )
+ 	
+Returns a team's enemy 
+
+ 
+EGroup  Team_GetEntitiesFromType( TeamID team, String unitType )
+ 	
+Returns an EGroup containing all of the teams entities of a specific unit_type (as defined by the type_ext on the entity) 
+
+This function returns a new EGroup to allow tracking of different types.
+
+ 
+boolean  Team_HasBuilding( TeamID team, BlueprintTable entitytypes[, ANY bool] )
+ 	
+Returns true if this team owns any buildings listed in the table. 
+
+Use ALL to check if all players on the team have this building
+
+ 
+boolean  Team_HasBuildingsExcept( TeamID team, BlueprintTable exceptions[, ANY bool] )
+ 	
+Returns true if this team owns any buildings. (with exclusions). 
+
+Use ALL to check if all players on the team have buildings EXCEPT this one
+
+ 
+boolean  Team_HasBuildingUnderConstruction( TeamID team, BlueprintTable entitytypes[, ANY bool] )
+ 	
+Returns true if this team owns any buildings listed in the table currently under construction. 
+
+Use ALL to check if all players on the team have this building under construction
+
+ 
+Boolean  Team_IsAlive( Void  )
+ 	
+Returns whether a team is still alive or not (all member players must be 'alive') 
+
+ 
+Boolean  Team_OwnsEGroup( TeamID team, EGroupID egroup[, Boolean any] )
+ 	
+Returns true if a given team owns ALL or ANY items in a group 
+
+ 
+Boolean  Team_OwnsEntity( TeamID team, EntityID entity )
+ 	
+Returns true if a given team owns an entity 
+
+ 
+Boolean  Team_OwnsSGroup( TeamID team, SGroupID sgroup[, Boolean all] )
+ 	
+Returns true if a given team owns ALL or ANY items in a group 
+
+ 
+Boolean  Team_OwnsSquad( TeamID team, SquadID squad )
+ 	
+Returns true if a given team owns a squad 
+
+ 
+Void  Team_RestrictAddOnList( TeamID team, Table addonlist )
+ 	
+Restrict a list of addons. 
+
+list should contain an array of strings to restrict.
+
+ 
+Void  Team_RestrictBuildingList( TeamID team, Table blueprintlist )
+ 	
+Restrict a list of buildings. 
+
+list should contain an array of strings to restrict.
+
+ 
+Void  Team_RestrictResearchList( TeamID team, StringTable list )
+ 	
+Restrict a list of research items. 
+
+list should contain an array of strings to restrict.
+
+ 
+Void  Team_SetAbilityAvailability( TeamID team, AbilityBlueprint/Table bp, Integer availability )
+ 	
+Sets the availability of an ability. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+Void  Team_SetCommandAvailability( TeamID team, Integer/Table command, Integer availability )
+ 	
+Sets the availability of entity, squad and player commands. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+Void  Team_SetConstructionMenuAvailability( TeamID team, String/Table menuname, Integer availability )
+ 	
+Sets the availability of a construction menu. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+Void  Team_SetEntityProductionAvailability( TeamID team, EntityBlueprint/Table bp, Integer availability )
+ 	
+Sets the availability of an entity production item. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+Void  Team_SetMaxCapPopulation( TeamID team, Integer captype, Integer newcap )
+ 	
+Sets the current personnel or vehicle max-cap for each player on a team. The captype is either CT_Personnel or CT_Vehicle (you can't adjust Medic caps just yet). 
+
+you will have to call Team_SetMaxPopulation to adjust the current max population to do this.
+
+ 
+Void  Team_SetMaxPopulation( TeamID team, Integer captype, Integer newcap )
+ 	
+Sets the current personnel or vehicle cap for each player on a team. The captype is either CT_Personnel or CT_Vehicle (you can't adjust Medic caps just yet). 
+
+Note that any modifiers that adjust the current cap will be applied on top of this. Also note, the current cap cannot go higher than the max cap.
+
+ 
+Void  Team_SetSquadProductionAvailability( TeamID team, SquadBlueprint/Table bp, Integer availability )
+ 	
+Sets the availability of a squad production item. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+void  Team_SetTechTreeByYear( TeamID team, Integer year )
+ 	
+Sets up the tech tree for a whole team based off the year 
+
+ 
+Void  Team_SetUpgradeAvailability( TeamID team, UpgradeBlueprint/Table bp, Integer availability )
+ 	
+Sets the availability of an upgrade. Availability can be either ITEM_LOCKED, ITEM_UNLOCKED, ITEM_REMOVED or ITEM_DEFAULT 
+
+ 
+Void  Team_SetUpgradeCost( TeamID team, UpgradeID upgrade, Real manpower, Real fuel, Real munition, Real action, Real command )
+ 	
+Sets the cost of an upgrade. 
+
+ 
+ 
+
+ 
+
+TheatreOfWar
+Functions
+
+Void  ToW_DefenseCreateWave( Integer waveNumber )
+ 	
+Starts an enemy wave in a ToW mission set up with proper data. See TheatreOfWar.scar for example data. 
+
+You need to add import("TheatreOfWar.scar") to your mission script to use this - it isn't imported by default
+
+ 
+Void  ToW_SetStandardResources( PlayerID player[, Table overrideData] )
+ 	
+Set a player to have standard starting resources, or use optional override data. 
+
+You need to add import("TheatreOfWar.scar") to your mission script to use this - it isn't imported by default
+
+ 
+Void  ToW_SetUpBattleObjectives( Void  )
+ 	
+Sets up a default mission objective for Victory Point battles. 
+
+You need to add import("TheatreOfWar.scar") to your mission script to use this - it isn't imported by default
+
+ 
+Void  ToW_SetUpTechTreeByYear( PlayerID player, Int year )
+ 	
+Restricts a given player's tech tree to just the units that were available in a specific year. 
+
+You need to add import("TheatreOfWar.scar") to your mission script to use this - it isn't imported by default
+
+ 
+ 
+
+ 
+
+Timer
+Functions
+
+Void  Timer_Add( Integer timerID, Real period )
+ 	
+Add the amount of time to the specified timer 
+
+ 
+Void  Timer_Advance( Integer timerID, Real period )
+ 	
+Advances the timer by the specified amount of time 
+
+ 
+Void  Timer_Display( Integer timerID )
+ 	
+Display (in the console) the amount of time remaining in the specified timer. 
+
+ 
+Void  Timer_DisplayOnScreen( Integer timerID )
+ 	
+Displays a timer on the screen - You need to call this regularly (i.e. every second) to update the onscreen display. THIS IS A TEMPORARY FUNCTION - WELL GET PROPER UI SUPPORT LATER ON 
+
+ 
+Void  Timer_End( Integer timerID )
+ 	
+Stop the specified timer. 
+
+ 
+Boolean  Timer_Exists( Integer timerID )
+ 	
+Returns whether the timer with this ID exists 
+
+ 
+Real  Timer_GetElapsed( Integer timerID )
+ 	
+Returns how much time has elapsed since this timer has been started 
+
+ 
+Void  Timer_GetMinutesAndSeconds( Luafunction getTimeFunction, Integer TimerID )
+ 	
+Returns TWO values: minutes and seconds. Provide it a function like Timer_GetRemaining or Timer_GetElapsed 
+
+ 
+Real  Timer_GetRemaining( Integer timerID )
+ 	
+Get the remaining time for the specified timer. 
+
+ 
+Boolean  Timer_IsPaused( Integer timerID )
+ 	
+Check if the timer is paused. 
+
+ 
+Void  Timer_Pause( Integer timerID )
+ 	
+Pause the specified timer. 
+
+ 
+Void  Timer_Resume( Integer timerID )
+ 	
+Resume the specified timer. 
+
+ 
+Void  Timer_Start( Integer timerID, Real period )
+ 	
+Start a timer with the specified id, taking the required period ( in seconds ) 
+
+ 
+ 
+
+ 
+
+UI
+Functions
+
+event cue ID  EventCue_Create( CueStyleID style, LocString title, LocString description, Marker/Pos/EGroup/SGroup cameratarget[, LocString hintpointtext, LuaFunction function, Float lifetime, Boolean dismissOnClick] )
+ 	
+Creates an Event Cue message which automatically sends the camera to a specified point when clicked on.  
+
+Can optionally create a 5-second hintpoint at the location when clicked on, and/or call a specified function for you, too. Both of these only activate the first time you click on the event cue to avoid stacking.
+
+ 
+Void  FOW_Enable( Boolean enable )
+ 	
+Enables or disables the FOW, including out of bound areas and all entities on the map 
+
+ 
+Void  Game_SubTextFade( LocString location, LocString time, LocString detail, Real in, Real lifetime, Real out )
+ 	
+Fade in and out two or three lines of subtext. 
+
+This function has to support two lines, for backwards compatibility. The 'detail' line is therefore optional.
+
+ 
+Void  HintMouseover_Add( LocString hintText, Marker/Position/Egroup/Sgroup hintTarget, Real targetRadius, Boolean looping )
+ 	
+Adds a Hint Point that will only appear on Mouseover of the target. 
+
+ 
+Void  HintMouseover_Remove( LocString hintText, Marker/Egroup/Sgroup hintTarget )
+ 	
+Removes a Mouseover Hint Point from the managing function. 
+
+ 
+HintPointID  HintPoint_Add( StackVar where, Boolean bVisible, LocString hintText[, number height, HintPointActionType actionType, String iconName] )
+ 	
+Creates a hintpoint attached to a Marker, EGroup, SGroup or position 
+
+If range is set to 0, then the hintpoint is rangeless, see the design document for rangeless features. The following types of hintpoint actions are available. HPAT_Objective HPAT_Hint HPAT_Critical HPAT_Movement HPAT_Attack HPAT_FormationSetup HPAT_RallyPoint HPAT_DeepSnow HPAT_CoverGreen HPAT_CoverYellow HPAT_CoverRed HPAT_Detonation HPAT_Vaulting
+
+ 
+Void  HintPoint_Remove( Integer HintPointID )
+ 	
+Removes a hintpoint. 
+
+ 
+Void  HintPoint_SetDisplayOffset( Integer hintpointID, Real x, Real y[, Real z] )
+ 	
+Sets a hintpoint's display offset, which is 3D for world hintpoints and 2D for taskbar binding hintpoints (ignore z) 
+
+ 
+Void  HintPoint_SetVisible( Integer HintPointID, Boolean bVisible )
+ 	
+Sets a hintpoint's visibility. Currently, FOW is not accounted for. 
+
+ 
+Boolean  Misc_IsEGroupSelected( EGroupID egroup, Boolean all )
+ 	
+Returns true if ANY or ALL of the EGroup is selected 
+
+ 
+Boolean  Misc_IsSGroupSelected( SGroupID sgroup, Boolean all )
+ 	
+Returns true if ANY or ALL of the SGroup is selected 
+
+ 
+Void  ThreatArrow_Add( Integer GroupID, entity/squad/egroup/sgroup/position/marker Threat[, String icon] )
+ 	
+Adds a threat to an existing group 
+
+ 
+Integer (ID)  ThreatArrow_CreateGroup( variable!argument!list: threats )
+ 	
+Creates a group of threats that are represented by a single arrow. Threats can be entities, squads, egroups, sgroups, positions or markers 
+
+ 
+Void  ThreatArrow_DestroyAllGroups( Void  )
+ 	
+Destroy all threat groups 
+
+ 
+Void  ThreatArrow_DestroyGroup( Integer GroupID )
+ 	
+Destroy a threat group 
+
+ 
+Void  ThreatArrow_Remove( Integer GroupID, entity/squad/egroup/sgroup/position/marker Threat )
+ 	
+Removes a threat from an existing group 
+
+ 
+Void  UI_AddHintAndFlashAbility( PlayerID playerid, AbilityID abilityID, LocString text, Integer length, [Table/Blueprint blueprint_filter] )
+ 	
+Creates and flashes an ability button on the taskbar if the unit is selected 
+
+Length parameter determines how long to flash the item, and the blueprint filter is used if certain squad types need to be selected before flashing the button.
+
+ 
+ID  UI_CreateEventCue( String iconPath, String soundPath, LocString title, LocString description[, Float lifetime, Boolean dismissOnClick] )
+ 	
+Creates an event cue without a callback (you won't know when it's clicked) 
+
+ 
+blipID  UI_CreateMinimapBlip( StackVar where, Real lifetime, Integer blipType )
+ 	
+Creates a blip on the minimap; return the ID of the blip. 
+
+'where' can be an entity, marker, position, egroup, sgroup, or squad. The following blipTypes are available: BT_AttackHere BT_DefendHere BT_CaptureHere BT_General BT_Combat BT_Reveal BT_ObjectivePrimary BT_ObjectiveSecondary
+
+ 
+Void  UI_CreateSGroupKickerMessage( PlayerID player, SGroup sgroup, LocString message )
+ 	
+Create a custom kicker message on the squad and display to the player. 
+
+ 
+Void  UI_DeleteMinimapBlip( Integer blipID )
+ 	
+Removes a blip already created on the minimap 
+
+ 
+Void  UI_HighlightSGroup( SGroupID sgroup, Real duration )
+ 	
+Highlights an SGroup in the UI for the given duration 
+
+ 
+void  UI_SetAllowLoadAndSave( bool allowLoadAndSave )
+ 	
+Enables or disable load and save features at the pause menu 
+
+ 
+Void  UI_SetSGroupSpecialLevel( SGroup sgroup, Int level )
+ 	
+Sets a level decorator that's defined in all of the squads squad_ui_ext in the target SGroup 
+
+if level value is -1 it will hide the special decorator, if no level is defined -1 is default
+
+ 
+void  WinWarning_PublishLoseReminder( ModPlayer* player, long warningLevel )
+ 	
+Triggers a UI event cue and an audio cue that the player is about to lose the game. 
+
+The lower the warningLevel, the closer the player is to losing and the more intense the warning is
+
+ 
+void  WinWarning_SetMaxTickers( int team1MaxTickers, int team2MaxTickers )
+ 	
+Sets the max victory point scores for the game 
+
+ 
+void  WinWarning_SetTickers( int team1Tickers, int team2Tickers )
+ 	
+Sets the victory point scores for the game 
+
+ 
+uint32_t  WinWarning_ShowLoseWarning( LocString text, float fadeIn, float duration, float fadeOut )
+ 	
+Call UI_TitleDestroy to remove.
+
+ 
+ 
+
+ 
+
+Util
+Functions
+
+Table  Clone( Table data )
+ 	
+Clones a table (recursively) allowing for unadulterated use of the data 
+
+ 
+Boolean  Event_IsAnyRunning( [Integer priority_threshold] )
+ 	
+Returns true if any event is currently running [at or below (more important than) the priority threshold. If not specified, ignores threshold.] 
+
+ 
+Void  Game_EndSP( Boolean win[, Boolean nis, Boolean sandmap] )
+ 	
+Ends the single player game (win/lose). 
+
+ 
+Void  Game_FadeToBlack( Bool direction, Real length )
+ 	
+Fades the screen to black - FADE_OUT to fade to black, FADE_IN to fade back in 
+
+ 
+nil  Import_Once( String Path )
+ 	
+Loads a scar file if it hasn't been loaded yet 
+
+ 
+LocString  Loc_FormatText( Integer FormatID[, argc parameters] )
+ 	
+Returns a formatted localized string. 
+
+Use this function to format localized text. ie %1PLAYERNAME% is going to win. It accepts up to 4 additional LocStrings as parameters.
+
+ 
+Integer  Sound_PlayOnSquad( String soundpathname, SGroupID/Squad sgroupid )
+ 	
+Play sound on the first entity of the squad in sgroup 
+
+ 
+EGroup  Team_GetEntityConcentration( TeamID team[, Boolean popcapOnly, Table includeBlueprints, Table excludeBlueprints, Boolean bLeastConcentrated, MarkerID/Table onlyInThisMarker] )
+ 	
+Finds the greatest (or least) concentration of entities owned by a team. 
+
+This function is slow, so don't call it very often
+
+ 
+SGroup  Team_GetSquadConcentration( TeamID team[, Boolean popcapOnly, Table includeBlueprints, Table excludeBlueprints, Boolean bLeastConcentrated, MarkerID/Table onlyInThisMarker] )
+ 	
+Finds the greatest (or least) concentration of squads owned by a team. 
+
+This function is slow, so don't call it very often
+
+ 
+SGroupID  Util_AddMouseoverSquadToSGroup( [Boolean clearGroup] )
+ 	
+If there's a squad under the mouse cursor, this adds it to a unique SGroup. Return value is the SGroup it was added to, or nil if there was no squad under the mouse cursor. Pass in true for 'clearGroup' to clear the sgroup before adding the squad. 
+
+ 
+ModID  Util_ApplyModifier( SGroupID/EGroupID/Player groupid, String modifier, Real scalefactor, Real mathtype[, Real applytype, Bool exclusive, String targetname] )
+ 	
+Applies any modifier to the target SGroup, EGroup, or Player 
+
+Valid applytypes are MAT_...(Entity, Squad etc.), if left default assumption is default type for the target Cases you want to define applytype: Weapon Modifiers, Enable Modifiers, or a player modifier for all entity or squad types Valid mathtypes are MUT...(Addition, Multiplication, etc.) Exclusive modifiers will replace all pre-existing modifiers of that modifier type on the target
+
+ 
+Void  Util_AutoAmbient( Table intelEventTable )
+ 	
+Auto-generate an Ambient Event. These are Low priority, and will hopefully interrupt nothing. 
+
+Takes a table of Actors and LOC numbers
+
+ 
+Void  Util_AutoIntel( Table intelEventTable )
+ 	
+Auto-generate an Intel Event. These are medium priority, and will interrupt a Stinger, but not an NIS. 
+
+Takes a table of parameters defining speaker(s) and line(s)
+
+ 
+Void  Util_AutoNISlet( Integer nisletType, Table intelEventTable, [boolean bFOWvisible] )
+ 	
+Auto-generate an NISlet Event, a simple NIS meant to convey mission location. These are high priority, and will interrupt a Stinger and Intel Events. 
+
+Takes an NISLET type and a table of parameters defining speaker(s) and line(s) NISLET_BLACK2GAME = 1 -- starts in black and fades up, ends in gamplay NISLET_GAME2GAME = 2 -- transitions from game play to letterbox and backto gameplay NISLET_GAME2BLACK = 3 -- starts in gameplay and ends in black NISLET_GAME2LETTER = 4 -- starts in gameplay and ends in letterbox mode (for transition to sitrep) NISLET_TIME = 1 -- use seconds to wait on camera movements NISLET_VO = 2 -- use voice to wait on camera movements t_eventes.nislet_start = { {camPos = pos1, waitType = NISLET_TIME, waitValue = 5}, {camPos = pos2, waitType = NISLET_VO, waitValue = {ACTOR.GenericAlly, 000000}}, }
+
+ 
+void  Util_Autosave( LocString checkpoint[, Float delay, Boolean noFade] )
+ 	
+Automatically save the game for the player. The savegame name is built using the abbreviated mission name + checkpoint.  
+
+ 
+Void  Util_ClearWrecksFromMarker( MarkerID/Pos/SectorID position[, Real range, Table wrecksList] )
+ 	
+Clears vehicle wrecks from a given area. 
+
+Area can be a marker (with or without a range override), a position and range combo, or a territory sector ID. Uses EBP.WRECKED_VEHICLES unless wrecksList is defined.
+
+ 
+Void  Util_DespawnAll( Boolean despawn, Boolean!allPlayers![or!Int playerNum], Boolean egroups )
+ 	
+ReSpawns or DeSpawns sgroups (and egroups) for all players or the indicated player. 
+
+examples: Util_DespawnAll(true, true, false) or Util_DespawnAll(true, 1, false) or Util_DespawnAll(false, true, false)
+
+ 
+Variable  Util_DifVar( Table difficultyVariables[, Integer difficulty] )
+ 	
+Takes in a table and chooses the right variable for the difficulty setting. 1-4 elements. Acquires current difficulty by default. 
+
+ 
+Boolean  Util_ElementCanSee( PlayerID/TeamID playerID/teamID, SGroupID/EGroupID/EntityID/SquadID/MarkerID/Position element[ )
+ 	
+Returns true if a Player/Team can see any or all of an SGroup/Squad/EGroup/Entity/Position/Marker 
+
+ 
+Boolean  Util_EntityLimit( [Integer entityLimit] )
+ 	
+Checks the entity count for the world and returns true or false depending on the result. A specific value can be passed in to override the default amount. 
+
+ 
+EntityID  Util_FallBackToGarrisonBuilding( SGroupID sgroupid, Int radius )
+ 	
+Try to garrison a loadable building within radius that is closer to the first squad of the sgroup than enemy 
+
+The squad suppression would be resetted before fallling back so that they would not succumb to pinned state
+
+ 
+Position  Util_FindHiddenSpawn( Position origin, Position destination )
+ 	
+Finds a hidden position within the FOW between two given points 
+
+If no position is found, returns origin
+
+ 
+Void  Util_ForceRetreatAll( SGroup sgroup, Marker marker, Bool/AIEncounter aiEncounterDisable )
+ 	
+Forces all squads given to retreat, regardless of whether they are on team weapons or not. Disables aiEncounters input (true disables all encounters). 
+
+ 
+EntityID  Util_GarrisonNearbyBuilding( SGroupID sgroup, Position pos, Real radius[, Boolean occupied, SGroup/Table filter] )
+ 	
+Finds a nearby building to garrison. can ignore occupied [friendly] buildings. return ID of entity it found, or nil if not found 
+
+Can also filter out groups not to occupy
+
+ 
+SquadID  Util_GarrisonNearbyVehicle( SGroupID sgroup, Position pos, Real radius[, Boolean occupied, SGroup/Table filter] )
+ 	
+Finds a nearby vehicle to garrison. can ignore occupied [friendly] vehicles. return ID of vehicle it found, or nil if not found, 
+
+Can also filter out groups not to occupy
+
+ 
+MarkerID  Util_GetClosestMarker( Variable var, Table markers )
+ 	
+Returns the closest MarkerID to the entity/marker/pos/egroup/sgroup/squad from the table of markers provided 
+
+ 
+Void  Util_GetEntitiesByBP( EGroupID sourcegroup, EGroupID destgroup, EntityBlueprint ebp )
+ 	
+Find all the entities with a given blueprint in sourcegroup and add them to destgroup. 
+
+See also: EGroup_Filter()
+
+ 
+Percentage health [0,1]  Util_GetHealth( Squad/Entity/Sgroup/Egroup var )
+ 	
+Determines the health percentage of a given object 
+
+Returns average health if the object is a group
+
+ 
+Void  Util_GetMouseoverSGroup( Void  )
+ 	
+Returns a unique SGroup used to hold mouseover squads obtained from Util_AddMouseoverSquadToSGroup 
+
+ 
+Position  Util_GetPosition( Variable var )
+ 	
+Returns a position from entity/marker/pos/egroup/sgroup/squad 
+
+ 
+Position  Util_GetPositionAwayFromPlayer( MarkerID/Pos/EGroupID/SGroupID pos, PlayerID player, [Integer searchRadius, Integer distance] )
+ 	
+Returns a random position within an area that is not near a player 
+
+searchRadius is the area to look for the location in. Distance is how far from the player's units the position must be.
+
+ 
+Position  Util_GetPositionFromAtoB( MarkerID/Pos a, MarkerID/Pos b, Real distance )
+ 	
+Returns a position that is distance metres from point A, headed in the direction of point B. 
+
+You can also pass in a percentage (0.0 to 1.0) instead of a distance in metres.
+
+ 
+Pos  Util_GetRandomPosition( MarkerID/ScarPos [, Real range] )
+ 	
+Returns a random position either within the marker's proximity or with a pos and range provided. Range is ignored for rectangular markers 
+
+ 
+Void  Util_GetSquadsByBP( SGroupID sourcegroup, SGroupID destgroup, SquadBlueprint sbp )
+ 	
+Find all the squads with a given blueprint in sourcegroup and add them to destgroup. 
+
+See also: SGroup_Filter()
+
+ 
+Number  Util_GetTrailingNumber( String val )
+ 	
+Returns trailing numbers from a string, if it exists, nil otherwise. E.G. "marker23" would return 23. 
+
+ 
+Boolean  Util_HasPosition( Variable var )
+ 	
+Returns true if given entity/marker/pos/egroup/sgroup/squad has a position; if false, Util_GetPosition will fail. 
+
+ 
+Void  Util_HidePlayerForNIS( PlayerID player, Bool hide )
+ 	
+Hides all of a player's squads and/or buildings 
+
+Doesn't hide buildings a player is in, or any base structures. Only items like sandbags, tanktraps, mg nests, etc. Put multiple playerIDs in a table to hide many players together, or use ALL for the playerID to apply to all players at once.
+
+ 
+bool  Util_IsSequenceSkipped( Void  )
+ 	
+Returns whether the currently running sequence has been skipped 
+
+ 
+Void  Util_Kill( Player/Squad/Entity/Sgroup/Egroup var )
+ 	
+Kills a given object 
+
+ 
+Void  Util_LogSyncWpn( SGroupID syncweapon[, Boolean kill] )
+ 	
+Tracks a syncweapon ID and destroys it (by default) or makes it uncapturable (if kill is set to false) 
+
+ 
+void  Util_MarkerFX( String markername, String eventfile )
+ 	
+Play an events file at a given markers location 
+
+ 
+Void  Util_MissionTitle( LocString title[, Int time_fade_in, Int lifetime, Int time_fade_out] )
+ 	
+Play the mission title fade. 
+
+ 
+Void  Util_MuteAmbientSound( Boolean enable, [Real fade] )
+ 	
+Enabling this function will mute the ambient sound (NOT all sound). 
+
+ 
+void  Util_NewHUDFeatureEvent( HUDFeatureType newHUDFeature, LocString featureText, String featureIcon, Real duration )
+ 	
+Calls UI_NewHUDFeature() as an IntelEvent. Will get queued as any other event. See UI_NewHUDFeature() for parameter details. 
+
+ 
+Void  Util_PlayMovie( String name[, Integer fadeOut, Integer fadeIn, LuaFunction onComplete, Integer delay, Boolean onCompleteAfterMovie] )
+ 	
+Play a movie. 
+
+If onCompleteAfterMovie is true, the onComplete function will play as soon as the movie is over, instead of after the fade-in
+
+ 
+Void  Util_PlayMusic( String name, Real fade, Real delay )
+ 	
+Plays music from the Data:Sound folder, and stores the music track so it can be resumed after a save/load 
+
+ 
+Void  Util_PrintObject( Object obj[, Int max_depth, String data_type, Function print_func] )
+ 	
+Prints out the entire contents of an Object 
+
+Objects can be anything (Player, SGroup, Int, Table, String, etc.), but this is most useful for Tables
+
+ 
+Void  Util_ReinforceEvent( SGroupID sgroupName[, LocID custumTitle, LocID customDescript] )
+ 	
+Creates an Event Cue for an SGroup and repeats it until the SGroup is killed or selected. 
+
+Additionally, a map ping and custome loc strings for the Title and Description can be used.
+
+ 
+Void  Util_ReloadScript( Void  )
+ 	
+Reloads the running scar script. Current running rules would also be updated to the redefined functioin. 
+
+ 
+Void  Util_RestoreMusic( )
+ 	
+Resumes playing the music track that was last triggered i.e. after a save/load 
+
+ 
+Void  Util_SetPlayerCanSkipSequence( LuaFunction event, LuaFunction skippedCallback, bool noFadeIn[, int fadeInTime] )
+ 	
+Sets it so that a player can skip a scripted sequence. When the skip key is pressed, calls back the given function as a post-sequence setup. noFadeIn stops the system from fading back into gameplay when finished. Call Util_SetPlayerUnableToSkipSequence() when the sequence is finished to disable 
+
+ 
+Void  Util_SetPlayerUnableToSkipSequence( LuaFunction event, LuaFunction skippedCallback, bool noFadeIn )
+ 	
+Disables Util_SetPlayerCanSkipSequence 
+
+ 
+Table  Util_SortPositionsByClosest( SGroupID/EGroupID/EntityID/SquadID/MarkerID/Position origin, Table positions[ )
+ 	
+Returns a table of positions sorted from closest to furthest (or furthes to closest if reverse is true) from the origin 
+
+ 
+Void  Util_StartAmbient( LuaFunction func )
+ 	
+Play a Speech Stinger. These are the lowest priority, and will be bumped by Intel Events or NIS's. 
+
+This function should used instead of Event_Start because it handles priorities.
+
+ 
+Void  Util_StartIntel( LuaFunction func )
+ 	
+Play an Intel Event. These are medium priority, and will interrupt a Stinger, but not an NIS. 
+
+This function should used instead of Event_Start because it handles priorities.
+
+ 
+Void  Util_StartNislet( LuaFunction event, LuaFunction skippedCallback, bool noFadeIn, int fadeInTime )
+ 	
+Play Nislet Event. Starts a Nislet event, and calls back a function for post-nislet setup if the Nislet is skipped. noFadeIn stops the system from fading back into gameplay when the player skips 
+
+ 
+Void  Util_StartQuickIntel( String actor, LocString speech )
+ 	
+Play a quick, one-line Intel event. These are medium priority, and will interrupt a Stinger, but not an NIS. 
+
+Use this when playing a single line. For multi-line events, use Util_StartIntel
+
+ 
+Boolean  Util_TableContains( Table targetTable, Object obj )
+ 	
+Checks the first layer of a table and looks for a specified Object, returns true if found. 
+
+Objects can be anything (Player, SGroup, Int, Table, String, etc.)
+
+ 
+void  Util_ToggleAllowIntelEvents( Void  )
+ 	
+Debug function used to toggle whether or not IntelEvents are played. Only works with -dev parameter 
+
+ 
+Void  Util_TriggerEvent( PlayerID playerid, Marker/EGroup/SGroup/ScarPos position, Int range, LuaFunction func, Boolean non_combat, Boolean onscreen_only, Int onscreen_duration )
+ 	
+Library function to trigger NIS event under a certain sets of conditions. NOTE: if checking against a marker DO NOT specify a range. The range of the marker set in the WorldBuilder will be used. 
+
+onscreen_only set to TRUE means the squad must be onscreen if the event is to be triggered.
+
+ 
+Lua Table  Util_UnitCounts( Boolean!world!OR!playerID player )
+ 	
+Returns a table containing either the total or a specific player's squad count, entity count, and vehicle count. 
+
+table can be accessed as scene below Get Player Example:<BR/> local t = Util_UnitCounts(player1)<BR/> print(t.squad)<BR/> print(t.entity)<BR/> print(t.vehicle)<BR/> Get World Example:<BR/> local t = Util_UnitCounts(true)<BR/> print(t.squad)<BR/> print(t.entity)<BR/> print(t.vehicle)<BR/> Alternate Format:<BR/> print(Util_UnitCounts(true).squad)<BR/>
+
+ 
+Void  World_KillAllNeutralEntitesNearMarker( MarkerID marker )
+ 	
+Kills ALL world entities near a marker 
+
+ 
+ 
+
+ 
+
+Various
+Functions
+
+void  Anim_PlayEntityAnim( Entity* entity, const char* animname )
+ 	
+Plays an animation from an entity. 
+
+This function can be called through a CTRL object in NISlets to wait on the animation.
+
+ 
+Void  bug( ErrorMessage errormessage )
+ 	
+E-mails a warning out with logfiles at the end of the game. 
+
+Example: bug( "This shouldn't happen, fix "..problem.here)
+
+ 
+void  Camera_AutoRotate( ScarPosition target, float distance, float declination, float speed )
+ 	
+Procedurally rotates the camera around a target. Camera input will be disabled. distance is in meters, declination is in degrees, speed is in degrees/sec. 
+
+ 
+void  Camera_ClampToMarker( ScarMarker marker )
+ 	
+Clamps the camera's target position to a marker. 
+
+ 
+void  Camera_FocusOnPosition( ScarPosition position, bool pan )
+ 	
+Focus the camera on the specified position. If pan is true, smoothly pan the camera to the target. 
+
+ 
+void  Camera_FollowEntity( Entity* entity )
+ 	
+Make the camera follow the specified entity. 
+
+ 
+void  Camera_FollowSelection( Void  )
+ 	
+Make the camera follow the current full selection. 
+
+ 
+void  Camera_FollowSquad( Squad* squad )
+ 	
+Make the camera follow the specified squad. 
+
+ 
+ScarPosition  Camera_GetCurrentTargetPos( Void  )
+ 	
+Get the current target position for the camera. (Where the the camera currently is.) 
+
+ 
+float  Camera_GetDeclination( Void  )
+ 	
+Get the current camera declination (tilt). 
+
+ 
+float  Camera_GetOrbit( Void  )
+ 	
+Get the current camera orbit (rotation). 
+
+ 
+ScarPosition  Camera_GetTargetPos( Void  )
+ 	
+Get the desired target position for the camera. (Where the camera is trying to get to.) 
+
+ 
+float  Camera_GetTuningValue( CameraOperator::TuningValue tuningValue )
+ 	
+Get camera tuning value. 
+
+ 
+float  Camera_GetZoomDist( Void  )
+ 	
+Get the current zoom distance for the camera. 
+
+ 
+bool  Camera_IsInputEnabled( Void  )
+ 	
+Returns the enabled/disabled state of the camera input. (not strict) 
+
+ 
+void  Camera_Reload( Void  )
+ 	
+Reload all camera tuning values. 
+
+ 
+void  Camera_ResetFocus( Void  )
+ 	
+Make the camera stop following anything. 
+
+ 
+void  Camera_ResetToDefault( Void  )
+ 	
+Reset camera position to default home position 
+
+ 
+void  Camera_SetDeclination( float declination )
+ 	
+Set the current camera declination (tilt). 
+
+ 
+void  Camera_SetInputEnabled( bool enabled )
+ 	
+Enables/disables camera input. 
+
+ 
+void  Camera_SetOrbit( float orbit )
+ 	
+Set the current camera orbit (rotation). 
+
+ 
+void  Camera_SetSlideTargetRate( float rate )
+ 	
+Changes the speed of the camera blends to be newRate until the user (or some other camera call) is made. Can call this with 0 to reset to default rate. 
+
+ 
+void  Camera_SetTuningValue( CameraOperator::TuningValue tuningValue, float value )
+ 	
+Set camera tuning value. 
+
+ 
+void  Camera_SetZoomDist( float distance )
+ 	
+Set the current zoom distance for the camera. 
+
+ 
+void  Camera_StopAutoRotating( Void  )
+ 	
+Stops the camera from procedurally rotating. Input is restored. 
+
+ 
+void  Camera_Unclamp( Void  )
+ 	
+Frees up the camera (so it's not clamped to a marker anymore). 
+
+ 
+Void  EGroup_CallEntityFunction( EGroupID egroup, Function entityFunction, variable!argument list )
+ 	
+Calls an Entity_ function on every entity in an egroup 
+
+The first parameter of the supplied function must be EntityID
+
+ 
+Void  EGroup_CallEntityFunctionAllOrAny( EGroupID egroup, Boolean all, Function entityFunction, variable!argument list )
+ 	
+Returns whether ALL or ANY entities in an egroup satisfy a condition, using an Entity_ function to perform the query on each entity 
+
+The first parameter of the supplied function must be EntityID
+
+ 
+int  fatal( lua_State* state )
+ 	
+Throws an error to lua and print out the error message 
+
+ 
+void  Game_EnableInput( bool enabled )
+ 	
+Enables/Disables all input EXCEPT for ESC and F10. 
+
+ 
+void  Game_EndSubTextFade( Void  )
+ 	
+Removes title text displayed with Game_SubTextFade(...) immediately 
+
+ 
+void  Game_EndTextTitleFade( Void  )
+ 	
+Removes title text displayed with Game_TextTitleFade(...) immediately 
+
+ 
+Player*  Game_GetLocalPlayer( Void  )
+ 	
+Get the local player. (should only be used for UI purpose) (not strict) 
+
+ 
+GameUICore::UIMode  Game_GetMode( Void  )
+ 	
+Returns the current game screen mode. 
+
+ 
+int  Game_GetSPDifficulty( Void  )
+ 	
+Returns current single player difficulty. Values are GD_EASY, GD_NORMAL, GD_HARD, GD_EXPERT. 
+
+ 
+bool  Game_HasLocalPlayer( Void  )
+ 	
+Determine if there is a valid local player. (UI only -- nondeterminstic) (not strict) 
+
+ 
+bool  Game_IsLetterboxed( Void  )
+ 	
+Returns true if the ui is in letterbox mode . (not strict) 
+
+ 
+bool  Game_IsPerformanceTest( Void  )
+ 	
+Returns true if the we're running the performance test. 
+
+ 
+bool  Game_IsRTM( Void  )
+ 	
+Use to test whether the game is running in RTM mode or not. Using -rtm from the command line will cause this function to also return true in non-RTM builds. 
+
+ 
+void  Game_Letterbox( bool on, float timeSecs )
+ 	
+Enters/Exits letterbox mode in amount of time specified by timeSecs. 
+
+Letterbox mode disables input
+
+ 
+void  Game_LoadAtmosphere( const char* filename, float transitionTime )
+ 	
+Transitions to another atmosphere. Overwrites current transitions. 
+
+ 
+void  Game_LockRandom( Void  )
+ 	
+If you are running something that is non-deterministic like a getlocalplayer conditional, you can lock the random to make sure no one down the callstack will throw the game random index out of sync and cause a sync error. REMEMBER TO UNLOCK WHEN YOU ARE DONE 
+
+ 
+void  Game_ProfileDumpFrames( const char* name, int32_t frameCount )
+ 	
+Dumps a profile series 
+
+ 
+void  Game_QuitApp( Void  )
+ 	
+Quits the app immediately 
+
+ 
+void  Game_ScreenFade( float r, float g, float b, float a, float timeSecs )
+ 	
+Fades the screen to a given RGBA colour over a number of seconds 
+
+ 
+void  Game_SetLocalPlayer( Player* player )
+ 	
+Sets the local player. (not strict) 
+
+ 
+void  Game_SetMode( GameUICore::UIMode mode )
+ 	
+Set the game screen mode 
+
+UI_Normal is the regular screen with taskbar. UI_Fullscreen is the mode without any 2D UI. UI_Cinematic is the same as letter box mode.
+
+ 
+void  Game_ShowPauseMenu( Void  )
+ 	
+Brings up the pause menu. The game does not get paused until the end of the current sim tick, so anything that comes after Game_ShowPauseMenu in your function will still get executed, as well as any rules set to run during that frame. 
+
+ 
+void  Game_SkipAllEvents( bool deleteQueued )
+ 	
+Skips all events. Can either delete or skip queued events. 
+
+ 
+void  Game_SkipEvent( Void  )
+ 	
+Skips the currently playing event (and stops current sound). 
+
+ 
+void  Game_StartMuted( bool startMuted )
+ 	
+Do not unmute game sounds when the mission starts (must be called in OnInit). Use this is you transition into a NIS to prevent any audio from playing until the NIS is over. 
+
+ 
+uint32_t  Game_TextTitleFade( LocString text, float fadeIn, float duration, float fadeOut )
+ 	
+Shows title text that fades in and out over a specified durations 
+
+Call UI_TitleDestroy to remove.
+
+ 
+void  Game_TriggerLightning( Void  )
+ 	
+Triggers lightning on the next frame 
+
+ 
+void  Game_UnlockInputOnLetterBox( Void  )
+ 	
+Unlocks user/camera input during letterbox. This should be used for debug only. 
+
+ 
+void  Game_UnLockRandom( Void  )
+ 	
+unlock the random from a previous lockrandom call only 
+
+ 
+void  Ghost_DisableSpotting( Void  )
+ 	
+Disable the spotting of enemy entities that may become ghosts in the FoW. 
+
+ 
+void  Ghost_EnableSpotting( Void  )
+ 	
+Enable the spotting of enemy entities that may become ghosts in the FoW. 
+
+ 
+size_t  HintPoint_AddToEGroup( EGroup* egroup, int priority, bool visible, LuaConfig::RefFunction function, LocString hint, bool arrow, ScarPosition arrowOffset, HintPointManager::HintPointActionType actionType, const char* iconName )
+ 	
+Deprecated. 
+
+ 
+size_t  HintPoint_AddToEntity( Entity* entity, int priority, bool visible, LuaConfig::RefFunction function, LocString hint, bool arrow, ScarPosition arrowOffset, int objectiveID, HintPointManager::HintPointActionType actionType, const char* iconName )
+ 	
+For internal use only. 
+
+ 
+size_t  HintPoint_AddToPosition( ScarPosition position, int priority, bool visible, LuaConfig::RefFunction function, LocString hint, bool arrow, ScarPosition arrowOffset, int objectiveID, HintPointManager::HintPointActionType actionType, const char* iconName )
+ 	
+For internal use only. 
+
+ 
+size_t  HintPoint_AddToSGroup( SGroup* sgroup, int priority, bool visible, LuaConfig::RefFunction function, LocString hint, bool arrow, ScarPosition arrowOffset, HintPointManager::HintPointActionType actionType, const char* iconName )
+ 	
+Deprecated. 
+
+ 
+size_t  HintPoint_AddToSquad( Squad* squad, int priority, bool visible, LuaConfig::RefFunction function, LocString hint, bool arrow, ScarPosition arrowOffset, int objectiveID, HintPointManager::HintPointActionType actionType, const char* iconName )
+ 	
+For internal use only. 
+
+ 
+void  HintPoint_ClearFacing( int id )
+ 	
+Clear the hint point arrow facing value. 
+
+ 
+void  HintPoint_RemoveAll( Void  )
+ 	
+Remove all hint points. 
+
+ 
+void  HintPoint_SetDisplayOffsetInternal( int id, ScarPosition offset )
+ 	
+Add a projected offset to the specified hint point. 
+
+ 
+void  HintPoint_SetFacingEntity( int id, Entity* entity )
+ 	
+Face the hint point arrow towards this entity. 
+
+ 
+void  HintPoint_SetFacingPosition( int id, ScarPosition position )
+ 	
+Face the hint point arrow towards this position. 
+
+ 
+void  HintPoint_SetFacingSquad( int id, Squad* squad )
+ 	
+Face the hint point arrow towards this squad. 
+
+ 
+void  HintPoint_SetVisibleInternal( int id, bool visible )
+ 	
+Show or hide the specified hint point. 
+
+ 
+void  inv_dump( Void  )
+ 	
+Dump content of inventory to a file 
+
+ 
+bool  IsOfType( const PropertyBagGroup* pbg, const char* type )
+ 	
+Returns true if this object is of the specified type 
+
+ 
+bool  IsSecuringStructure( const PropertyBagGroup* pbg )
+ 	
+Can this structure be used to secure territory 
+
+ 
+bool  IsStructure( const PropertyBagGroup* pbg )
+ 	
+Returns true if this object is a structure (something with a site_ext) 
+
+ 
+bool  License_CanPlayRace( const char* raceName )
+ 	
+Returns whether the installed version of the game allows the player to play this race 
+
+ 
+LocString  LOC( const char* text )
+ 	
+DEV ONLY: Converts ansi text to localized text. 
+
+Your text will have to get localized properly at some point before final. When converting text with this function you will get LOC: prefixed to your text
+
+ 
+LocString  Loc_ConvertNumber( int number )
+ 	
+Returns a localized string containing the number. 
+
+ 
+LocString  Loc_Empty( Void  )
+ 	
+Empty string. 
+
+This will create an empty localized string.
+
+ 
+LocString  Loc_FormatTime( int secs, bool show_hours, bool leading_zeroes )
+ 	
+Returns a formatted time string. can omit hours and leading zeroes (for example, 4:57 instead of 00:04:57) 
+
+ 
+void  Misc_AbortToFE( Void  )
+ 	
+Abort straight out of the game to the frontend, without asking the user 
+
+ 
+void  Misc_AddRestrictCommandsMarker( ScarMarker marker )
+ 	
+Add another marker in which commands are restricted to. 
+
+ 
+void  Misc_AIControlLocalPlayer( Void  )
+ 	
+Let AI take over local player 
+
+ 
+bool  Misc_AreDefaultCommandsEnabled( Void  )
+ 	
+Returns the enabled/disabled state of the right-click command input. (not strict) 
+
+ 
+bool  Misc_DetectKeyboardInput( Void  )
+ 	
+Returns true if the app has had any keyboard input in the last second 
+
+ 
+bool  Misc_DetectMouseInput( Void  )
+ 	
+Returns true if the app has had any mouse input in the last second 
+
+ 
+void  Misc_DoWeaponHitEffectOnEntity( Entity* entity, ScarPosition pos, ScarWeaponPBG weaponPBG, bool penetrated )
+ 	
+Do weapon hit effect on the entity from the view camera origin 
+
+WeaponID is the property bag group id; if penetrated is set to false, deflection effect would be played instead
+
+ 
+void  Misc_EnablePerformanceTest( bool toEnable )
+ 	
+Turn on or off the performance test monitoring 
+
+ 
+const char*  Misc_GetCommandLineString( const char* option )
+ 	
+Returns the string argument for a command line option. ex: for "-init test.lua" it would return "test.lua" 
+
+ 
+void  Misc_GetControlGroupContents( int groupIndex, SGroup* squads, EGroup* nonSquadEntities )
+ 	
+Returns contents of a control group (0 to 9). Squads are put into an sgroup, and non-squad entities are put into an egroup. 
+
+ 
+int  Misc_GetEntityControlGroup( Entity* entity )
+ 	
+Returns the control group index that this entity belongs to, from 0 to 9, or -1 if none. 
+
+ 
+ScarPosition  Misc_GetHiddenPositionOnPath( CheckHiddenType checkType, ScarPosition origin, ScarPosition destination, ScarEntityPBG ebp, float stepDistance, float cameraPadding, ModPlayer* fowPlayer, bool debugDisplay )
+ 	
+Returns a hidden position on path from origin to destination. If there's none, it returns the origin position 
+
+Possible check types are CheckHiddenFromCamera, CheckHiddenInFOW and CheckHiddenBothCameraFOW Camera check determined by the camera frustum. use cameraPadding to increase the area around the camera when doing the check FOW check requires a valid player ID passed in stepDistance is the interval along the path that the hidden points will be checked ( min is 1 metre ) If no hidden position is found, position ( 0, 0, 0 ) is returned Don't use this for multi-player SCAR script!!
+
+ 
+ScarPosition  Misc_GetMouseOnTerrain( Void  )
+ 	
+Returns the world position of the mouse on the terrain (not strict) 
+
+ 
+Entity*  Misc_GetMouseOverEntity( Void  )
+ 	
+Returns the entity under the mouse (if any) (not strict) 
+
+ 
+void  Misc_GetSelectedEntities( EGroup* group, bool subselection )
+ 	
+Clears a given group and adds the current full selection (or subselection if true) to the group. 
+
+ 
+void  Misc_GetSelectedSquads( SGroup* group, bool subselection )
+ 	
+Clears a given group and adds the current full selection (or subselection if true) to the group. 
+
+ 
+int  Misc_GetSquadControlGroup( Squad* squad )
+ 	
+Returns the control group index that this squad belongs to, from 0 to 9, or -1 if none. 
+
+ 
+bool  Misc_IsCommandLineOptionSet( const char* option )
+ 	
+Returns true if -option is specified on the command line 
+
+ 
+bool  Misc_IsDevMode( Void  )
+ 	
+Returns whether the game is running in dev mode. The rules for dev mode are a bit complicated between builds, so we cannot simply check the command line. 
+
+ 
+bool  Misc_IsEntityOnScreen( Entity* entity, float percent )
+ 	
+Check if the squad is on screen currently (not strict) 
+
+ 
+bool  Misc_IsEntitySelected( Entity* entity )
+ 	
+Returns true if the specified entity is currently selected. 
+
+ 
+bool  Misc_IsMouseOverEntity( Void  )
+ 	
+Returns true if the mouse is over an entity (not strict) 
+
+ 
+bool  Misc_IsPosOnScreen( ScarPosition pos, float percent )
+ 	
+Check if position is on screen, (1 being the entire screen, 0.5 being 50% of the screen from the center point) 
+
+ 
+bool  Misc_IsSelectionInputEnabled( Void  )
+ 	
+Returns the enabled/disabled state of the selection input. (not strict) 
+
+ 
+bool  Misc_IsSquadOnScreen( Squad* squad, float percent )
+ 	
+Check if the entity is on screen currently (not strict) 
+
+ 
+bool  Misc_IsSquadSelected( Squad* squad )
+ 	
+Returns true if the specified squad is currently selected. 
+
+ 
+void  Misc_RemoveCommandRestriction( Void  )
+ 	
+Remove all command restrictions. 
+
+ 
+void  Misc_RestrictCommandsToMarker( ScarMarker marker )
+ 	
+Set the marker in which commands are restricted to. 
+
+ 
+const char*  Misc_Screenshot( Void  )
+ 	
+Save a screenshot 
+
+ 
+void  Misc_ScreenshotExt( const char* fileExtension )
+ 	
+Set the graphic file type for screenshot (.jpg, .tga) 
+
+ 
+void  Misc_SelectEntity( Entity* entity )
+ 	
+Set the full selection to the specified entity. 
+
+ 
+void  Misc_SelectSquad( Squad* squad, bool selected )
+ 	
+Set the full selection to the specified entity. 
+
+ 
+void  Misc_SetDefaultCommandsEnabled( bool enabled )
+ 	
+Enables/disables right-click command input. 
+
+ 
+void  Misc_SetDesignerSplatsVisibility( bool bVisible )
+ 	
+Shows or hides designer splats, which are splats in the UI folder 
+
+ 
+void  Misc_SetEntityControlGroup( Entity* entity, int groupIndex )
+ 	
+Makes an entity belong to a specific control group. If it already belongs to another control group, it's removed from that one before being added to the new one. 
+
+ 
+void  Misc_SetEntitySelectable( Entity* entity, bool selectable )
+ 	
+Disable/enable selectability of the specified entity. 
+
+ 
+void  Misc_SetSelectionInputEnabled( bool enabled )
+ 	
+Enables/disables selection input. 
+
+ 
+void  Misc_SetSquadControlGroup( Squad* squad, int groupIndex )
+ 	
+Makes a squad belong to a specific control group. If it already belongs to another control group, it's removed from that one before being added to the new one. 
+
+ 
+void  Misc_SetSquadSelectable( Squad* squad, bool selectable )
+ 	
+Disable/enable selectability of the specified squad. 
+
+ 
+Void  Mission_Complete( Void  )
+ 	
+Plays the defined end cinematic and ends an SP scenario with a Victory. 
+
+ 
+Void  Mission_Fail( Void  )
+ 	
+Ends an SP scenario with a Failure. 
+
+ 
+Table objective  Mission_GetSecondaryObjective( Void  )
+ 	
+Return a reference to the Secondary Objective table. Nil if objective has not been started yet. 
+
+ 
+Void  Mission_StartBonusObjective( Bool showTitle, Bool skipIntel[, Int index] )
+ 	
+Selects a possible secondary objective and starts it. 
+
+'index' can be used to override the random selection and load a specific secondary objective.
+
+ 	Source: [coh2\BIA\root\CoH2\Data\Scar/ScriptSetup.scar] (330) 
+References: [Slottable+Secondary+Objectives]
+
+Void  Mission_Win( Void  )
+ 	
+Ends an SP scenario with a Victory without playing any end cinematics. 
+
+ 
+uint32_t  Modifier_ApplyToEntity( const Modifier* modifier, Entity* entity )
+ 	
+Applies an entity modifier to an entity. 
+
+ 
+uint32_t  Modifier_ApplyToPlayer( const Modifier* modifier, ModPlayer* player )
+ 	
+Applies a player modifier to a player. 
+
+ 
+uint32_t  Modifier_ApplyToSquad( const Modifier* modifier, Squad* squad )
+ 	
+Applies a squad modifier to a squad. 
+
+ 
+const Modifier*  Modifier_Create( Modifier::ModifierApplicationType applicationType, const char* modtype, Modifier::ModifierUsageType usageType, bool exclusive, float value, LuaBinding::StackVar v )
+ 	
+Returns a modifier that you can apply to stuff. 
+
+applicationType : MAT_EntityType, MAT_Entity, MAT_Player, MAT_Squad, MAT_SquadType, or MAT_Weapon.<BR/> modtype : Name of modifier from the modifiers table in the attribute editor.<BR/> usageType : MUT_Addition, MUT_Multiplication, MUT_MultiplyAdd or MUT_Enable.<BR/> exclusive : This field is not currently used for modifiers created through script. <BR/> value : The value for the modifier.<BR/> extname : The name of the entity/squad blueprint for when the applicationType is MAT_EntityType or MAT_SquadType.
+
+ 
+void  Modifier_Destroy( const Modifier* modifier )
+ 	
+Todo. 
+
+ 
+bool  Modifier_IsEnabled( Entity* pEntity, const char* modtype, bool bEnabledByDefault )
+ 	
+Checks whether the modifier is enabled (requires an Entity and an Entity enable/disable modifier) 
+
+ 
+void  nis_setintransitiontime( float numSeconds )
+ 	
+Sets the number of seconds it takes to transition from game to nis, 0 is instantaneous 
+
+This includes blending the camera position, fov and clip planes
+
+ 
+void  nis_setouttransitionnis( const char* filename )
+ 	
+Lets the nis system know which nis will be transitioned to when the first one ends. 
+
+This function doesn't actually trigger a second nis to start, rather it lets the NIS system know which one will be next, so it can prevent the camera from popping back to the game camera.
+
+ 
+void  nis_setouttransitiontime( float numSeconds )
+ 	
+Sets the number of seconds it takes to transition from nis back to game, 0 is instantaneous 
+
+This includes blending the camera position, fov and clip planes
+
+ 
+int  Obj_Create( ModPlayer* player, LocString title, LocString desc, const char* icon, Objective::Type type, int parentID )
+ 	
+Create an objective and returns the unique ID for it 
+
+type could either be OT_Primary or OT_Secondary
+
+ 
+void  Obj_Delete( int objectiveID )
+ 	
+Delete the objective with the specified ID 
+
+ 
+void  Obj_DeleteAll( Void  )
+ 	
+Delete all objectives 
+
+ 
+Objective::State  Obj_GetState( int objectiveID )
+ 	
+Get objective state ( OS_Off, OS_Incomplete, OS_Complete, OS_Failed ) (not strict) 
+
+ 
+bool  Obj_GetVisible( int objectiveID )
+ 	
+Get objective visibility (not strict) 
+
+ 
+void  Obj_HideProgress( Void  )
+ 	
+Hide the objective progress panel. 
+
+ 
+void  Obj_SetDescription( int objectiveID, LocString desc )
+ 	
+Set description text localization ID for the objective 
+
+ 
+void  Obj_SetIcon( int objectiveID, const char* icon )
+ 	
+Set icon path for the objective 
+
+ 
+void  Obj_SetObjectiveFunction( int id, Objective::ObjectiveFn fnType, LuaConfig::RefFunction f )
+ 	
+Set callback functions for the objective. (not strict) 
+
+FN_OnActivate is for triggering situation report. FN_OnShow is used to assign UI element when tactical map is open. FN_OnSelect is used to assign UI element when the objective is highlighted
+
+ 
+void  Obj_SetProgressBlinking( bool blinking )
+ 	
+Make the objective progress bar blink or stop blinking. 
+
+ 
+void  Obj_SetState( int objectiveID, Objective::State state )
+ 	
+Set objective state ( OS_Off, OS_Incomplete, OS_Complete, OS_Failed ) 
+
+ 
+void  Obj_SetTitle( int objectiveID, LocString title )
+ 	
+Set title text localization ID for the objective 
+
+ 
+void  Obj_SetVisible( int objectiveID, bool visible )
+ 	
+Set objective visibility 
+
+ 
+void  Obj_ShowProgress( LocString title, float progress )
+ 	
+Show the objective progress panel with a progress bar - call repeatedly to update progress. Value should be normalized between [0 - 1]. 
+
+ 
+void  Obj_ShowProgress2( LocString title, float progress )
+ 	
+Show the objective progress panel with a progress bar - call repeatedly to update progress. Value should be normalized between [0 - 1]. Appears in center of screen. 
+
+ 
+void  Obj_ShowProgressTimer( LocString title, float progress )
+ 	
+Show the objective progress panel with a timer icon - call repeatedly to update progress. Value should be in seconds. 
+
+ 
+GroupTable table  OpBounty_AddRewardGroup( Table groupTable )
+ 	
+Does things 
+
+ 
+GroupTable table  OpBounty_AddRewardTable( Table groupTable )
+ 	
+Does things 
+
+ 
+Void  Order227_Init( [Integer timeLimit, Integer timeBetweenShots, Boolean noMercy] )
+ 	
+Enable the HQ Commissar in CoH2 campaign missions. The noMercy flag allows the Commissar to execute more than one member of each squad. 
+
+ 
+Void  PrintOnScreen( String text )
+ 	
+Prints a message on the screen 
+
+Prints the given message on the screen. It will stay there until you call PrintOnScreen_RemoveFromScreen() or print another message on the screen to replace it.
+
+ 
+PrintOnScreenID  PrintOnScreen_Add( Object object, String id[, String style] )
+ 	
+Prints the lua content of an object on the screen 
+
+Prints the given message on the screen. If you would like to print multiple messages without clearing them you can assign them unique ID's. Must use PrintOnScreen_Remove(id) to remove each instance
+
+ 
+Void  PrintOnScreen_Remove( String id )
+ 	
+Removes the PrintOnScreen text of a given ID 
+
+ 
+Void  PrintOnScreen_RemoveFromScreen( )
+ 	
+Remove any messages from the screen 
+
+Removes from the screen any messages put there with PrintOnScreen()
+
+ 
+ResourceAmount  ResourceAmount_Add( ResourceAmount amt1, ResourceAmount amt2 )
+ 	
+Add each element of the two passed in ResourceAmounts together 
+
+ 
+ResourceAmount  ResourceAmount_ClampToZero( ResourceAmount amt )
+ 	
+Clamps the passed in resource to zero if it has any negative numbers 
+
+ 
+bool  ResourceAmount_Has( ResourceAmount amt1, ResourceAmount amt2 )
+ 	
+Returns true if the first amount has enough resources for the second amount (amt2) 
+
+ 
+ResourceAmount  ResourceAmount_Mult( ResourceAmount amt1, float mult )
+ 	
+Take a resource amount and multiply each value inside of it by mult 
+
+ 
+ResourceAmount  ResourceAmount_Subtract( ResourceAmount amt1, ResourceAmount amt2 )
+ 	
+Subtract the second amount from the first and return the new ResourceAmount 
+
+ 
+float  ResourceAmount_Sum( ResourceAmount amt1 )
+ 	
+Add up all the numbers in the resource and return a single value 
+
+ 
+ResourceAmount  ResourceAmount_Zero( Void  )
+ 	
+Creates a new ResourceAmount all set to zero 
+
+ 
+void  Scar_Autosave( Void  )
+ 	
+Saves the game. the savegame name is built using the abbreviated mission name + checkpoint. 
+
+ 
+void  Scar_CompleteIntelBulletinTask( Player* pCompleter, const char* taskId )
+ 	
+Complete a intel bulletin task of campaign type 
+
+ 
+void  Scar_DebugConsoleExecute( const char* command )
+ 	
+execute console command string. Will only work if dev mode is enabled! (it's OFF by default in RTM builds) 
+
+ 
+void  Scar_PlayNIS( const char* filename )
+ 	
+Play NIS through SCAR. Should only be used inside a event function 
+
+ 
+void  Scar_PlayNIS2( const char* filename1, const char* filename2 )
+ 	
+Play 2 NISs through SCAR. Should only be used inside a event function 
+
+ 
+void  Scar_ReloadAIScripts( Void  )
+ 	
+Reloads AI Scripts 
+
+ 
+float  Setup_GetVictoryPointTickerOption( Void  )
+ 	
+Get the victory point ticker option selected 
+
+ 
+void  Setup_SetPlayerName( ModPlayer* player, LocString name )
+ 	
+Set the UI name of a given player. 
+
+ 
+void  Setup_SetPlayerRace( ModPlayer* player, uint32_t raceIndex )
+ 	
+Set the race for a given player. Use World_GetRaceIndex() to get the race id from the ME name. 
+
+ 
+void  Setup_SetPlayerTeam( ModPlayer* p, int team_id )
+ 	
+Put a player in a team. Use TEAM_NEUTRAL as the team_id to set the player as neutral 
+
+ 
+Void  SGroup_CallEntityFunction( SGroupID sgroup, Function entityFunction )
+ 	
+Calls an Entity_ function on every entity in an sgroup 
+
+The first parameter of the supplied function must be EntityID
+
+ 
+Void  SGroup_CallSquadFunction( SGroupID sgroup, Function squadFunction, variable!argument list )
+ 	
+Calls a Squad_ function on every squad in an sgroup 
+
+The first parameter of the supplied function must be SquadID
+
+ 
+Void  SGroup_CallSquadFunctionAllOrAny( SGroupID sgroup, Boolean all, Function squadFunction, variable!argument list )
+ 	
+Returns whether ALL or ANY squads in an sgroup satisfy a condition, using a Squad_ function to perform the query on each squad 
+
+The first parameter of the supplied function must be SquadID
+
+ 
+void  SitRep_PlayMovie( const char* url )
+ 	
+Play the specified movie. 
+
+ 
+uint32_t  SitRep_PlaySpeech( const char* icon, LocString loc, bool disableIconSubtitle, bool continueButton, bool blockInput, bool stickySubtitle, const char* additionalPath )
+ 	
+Deprecated. 
+
+Call UI_TitleDestroy to remove.
+
+ 
+void  SitRep_StopMovie( Void  )
+ 	
+Stop the currently playing movie. 
+
+ 
+void  Sound_ContainerDebug( Void  )
+ 	
+Turns container debugging on/off 
+
+Example:<BR/><BR/> \Sound_ContainerDebug()<BR/>
+
+ 
+void  Sound_DisableSpeechEvent( int event )
+ 	
+Disables certain speech events. 
+
+ 
+bool  Sound_IsPlaying( size_t handle )
+ 	
+Returns true if the sound associated with the handle is currently playing. 
+
+ 
+void  Sound_PerfTest_Play2D( const char* name, size_t instances )
+ 	
+Starts multiple 2D instances of the same sound. 
+
+ 
+size_t  Sound_Play2D( const char* name )
+ 	
+Plays a 2D sound from the Data:Sound folder. Use the path relative to Sound folder without the file extension. Returns handle to the sound container 
+
+The sound needs to be 2D Example:<BR/><BR/> <TAB/>Sound_Play( "Blah/Mysound" )<BR/>
+
+ 
+size_t  Sound_Play3D( const char* name, Entity* actor )
+ 	
+Plays a 3D sound from the Data:Sound folder on the entity. Use the path relative to Sound folder without the file extension. Returns handle to the sound container 
+
+The sound needs to be 3D Example:<BR/><BR/> <TAB/>Sound_Play( "Speech/SpaceMarine/AddOnComplete", TheActor )<BR/>
+
+ 
+void  Sound_PlayMusic( const char* name, float fade, float delay )
+ 	
+Plays music from the Data:Sound folder. 
+
+The new music will phase out the old one. There can only be one music playing at anytime besides the transition fade is the time to fade in the music; delay is the time in seconds to wait until the new music is started Example:<BR/><BR/> <TAB/>Sound_PlayMusic( "Music/GreatMusic", 0.0, 0.0 )<BR/>
+
+ 
+size_t  Sound_PlayStreamed( const char* name )
+ 	
+Plays a streaming sound from the Data:Sound folder. Use the path relative to Sound folder without the file extension. Returns handle to the sound container 
+
+The sound needs to be 2D Example:<BR/><BR/> <TAB/>Sound_PlayStreamed( "Blah/Mysound" )<BR/>
+
+ 
+void  Sound_PreCacheSinglePlayerSpeech( const char* mission )
+ 	
+Pre-caches single player speech. For instance pre-caching mission 1 speech is done like: Sound_PreCacheSinglePlayerSpeech("mission01") 
+
+ 
+void  Sound_PreCacheSound( const char* name )
+ 	
+pre-caches a sound 
+
+Example:<BR/><BR/> <TAB/>Sound_PreCacheSound("nis/m02_n01_full")<BR/>
+
+ 
+void  Sound_PreCacheSoundFolder( const char* name )
+ 	
+pre-caches a sound folder 
+
+Example:<BR/><BR/> <TAB/>Sound_PreCacheSoundFolder("sp/mission1")<BR/>
+
+ 
+void  Sound_SetGlobalControlSource( const char* name, float value )
+ 	
+Sets the value for a global control source. 
+
+Example:<BR/><BR/> \Sound_SetGlobalControlSource("GameType", 2)<BR/>
+
+ 
+void  Sound_SetMusicCombatValue( float immCombatValue, float overrideTime )
+ 	
+immCombatValue is the new music combat value. Override time is in seconds. You can call this function with 0 for both values in order to cancel the override. 
+
+ 
+void  Sound_SetVolume( const char* name, float volume, float time )
+ 	
+Sets a new volume for the group. Valid volume values are 0 to 1. 
+
+Example:<BR/><BR/> <TAB/>Sound_Volume("Weapons", 0.5, 2)<BR/>
+
+ 
+void  Sound_SetVolumeDefault( const char* name, float time )
+ 	
+Sets the default volume for the group. 
+
+Example:<BR/><BR/> <TAB/>Sound_SetVolumeDefault("Weapons", 2)<BR/>
+
+ 
+void  Sound_SetVolumeInv( const char* name, float volume, float time )
+ 	
+Sets the volume for all groups except the one specified. Valid volume values are 0 to 1. 
+
+Example:<BR/><BR/> <TAB/>Sound_VolumeInv("NIS", 0.5, 2)<BR/>
+
+ 
+void  Sound_StartRecording( const char* name )
+ 	
+Starts recording the sound driver output 
+
+Example:<BR/><BR/> <TAB/>Sound_StartRecording("Recordings/MyRecording.wav")<BR/>
+
+ 
+void  Sound_Stop( size_t handle )
+ 	
+Stops sound associated with the container handle 
+
+ 
+void  Sound_StopAll( Void  )
+ 	
+Stops all sounds associated with the container manager. 
+
+ 
+void  Sound_StopMusic( float fade, float delay )
+ 	
+Stop current playing music 
+
+Currently playing music would be stopped. If nothing is playing, nothing will happen fade is the time to fade out the music; delay is the time in seconds wait until the new music is stopped Example:<BR/><BR/> <TAB/>Sound_StopMusic( 2.0, 0.0 )<BR/>
+
+ 
+void  Sound_StopRecording( Void  )
+ 	
+Stops recording the sound driver output 
+
+Example:<BR/><BR/> <TAB/>Sound_StopRecording()<BR/>
+
+ 
+void  Speech_SetGlobalStealthRead( float sunlightThreshold )
+ 	
+Overrides default stealth speech auto-detect mechanism. Stealth speech will play when sunlight brightness is below the threshold, with 0 being total darkness and 1 being full brightness. Set to -1 to use the default behavior. 
+
+ 
+void  statgraph( Void  )
+ 	
+?? 
+
+ 
+void  statgraph_channel( const char *channel )
+ 	
+?? 
+
+ 
+bool  statgraph_channel_get_enabled( const char *channel )
+ 	
+?? 
+
+ 
+void  statgraph_channel_set_enabled( const char *channel, bool enable )
+ 	
+?? 
+
+ 
+void  statgraph_clear( Void  )
+ 	
+?? 
+
+ 
+void  statgraph_list( Void  )
+ 	
+?? 
+
+ 
+void  statgraph_pause( Void  )
+ 	
+?? 
+
+ 
+void  Subtitle_EndAllSpeech( Void  )
+ 	
+Prematurely finish all queued speech 
+
+This is useful for skipping all speech events that may have been queued
+
+ 
+void  Subtitle_EndCurrentSpeech( Void  )
+ 	
+Prematurely finish currently playing speech and advance the next one in queue 
+
+This is useful for skipping speech events
+
+ 
+uint32_t  Subtitle_PlaySpeech( const char* icon, LocString loc, bool disableIconSubtitle, bool continueButton, bool blockInput, bool stickySubtitle, const char* additionalPath )
+ 	
+Plays a global speech with subtitle and actor icon in the overlay 
+
+Call UI_TitleDestroy to remove.
+
+ 
+void  Subtitle_UnstickCurrentSpeech( Void  )
+ 	
+Removes "sticky" state from currently playing speech (if any) 
+
+ 
+Boolean  SyncWeapon_CanAttackNow( SyncWeaponID weapon, egroup/sgroup/pos/marker target )
+ 	
+Checks whether a sync weapon can attack a target without moving or turning. 
+
+ 
+Boolean  SyncWeapon_Exists( SyncWeaponID weapon )
+ 	
+Returns true if a sync weapon still exists in the game world 
+
+ 
+EntityID  SyncWeapon_GetEntity( SyncWeaponID weapon )
+ 	
+Returns the EntityID of a sync weapon, or nil if it's been destroyed 
+
+ 
+SyncWeaponID  SyncWeapon_GetFromEGroup( EGroupID egroup )
+ 	
+Registers the sync weapon in the egroup and returns a SyncWeaponID you can use to keep track of it 
+
+ 
+SyncWeaponID  SyncWeapon_GetFromSGroup( SGroupID sgroup )
+ 	
+Registers the sync weapon in the sgroup and returns a SyncWeaponID you can use to keep track of it 
+
+ 
+Position  SyncWeapon_GetPosition( SyncWeaponID weapon )
+ 	
+Returns the position of a sync weapon, or nil if it's been destroyed 
+
+ 
+Boolean  SyncWeapon_IsAttacking( SyncWeaponID weapon, Real time )
+ 	
+Checks whether or not the actual sync weapon in a squad attacking. 
+
+ 
+Boolean  SyncWeapon_IsOwnedByPlayer( SyncWeaponID weapon, [PlayerID player] )
+ 	
+Returns true if the specified player owns the sync weapon. Use a playerid of nil to see if it's unonwed. 
+
+If player is not specified, then the code will check to see if the SyncWeapon is owned by the world.
+
+ 
+Void  SyncWeapon_SetAutoTargetting( SyncWeaponID weapon, String hardpoint, Bool enable )
+ 	
+Sets whether a weapon to auto-target things or not 
+
+ 
+bool  Taskbar_IsVisible( Void  )
+ 	
+Returns true if the taskbar is visible. (not strict) 
+
+ 
+void  Taskbar_SetVisibility( bool visible )
+ 	
+Sets taskbar visibility. 
+
+ 
+size_t  TaskCountActivePBG( AIPlayer* pPlayer, const PropertyBagGroup* pbg, ProductionItemType buildtype, bool bCheckState, bool bCheckActive )
+ 	
+Determine how many tasks with the given PBG are of the provided active state, passing no last parameters means to check both 
+
+ 
+size_t  TaskCountPBG( const AIPlayer* pPlayer, const PropertyBagGroup* pbg, ProductionItemType buildtype )
+ 	
+Determine how many requested are currently created for this pbg 
+
+ 
+void  UI_AutosaveMessageHide( Void  )
+ 	
+Removes a message added by UI_AutosaveMessageShow. 
+
+ 
+void  UI_AutosaveMessageShow( Void  )
+ 	
+Shows a message indicating that the game is autosaving. 
+
+Call UI_AutosaveMessageHide to remove the message.
+
+ 
+void  UI_ClearEventCues( Void  )
+ 	
+Clears all active event cues 
+
+ 
+void  UI_ClearModalAbilityPhaseCallback( Void  )
+ 	
+Clears the ability phase callback. 
+
+ 
+void  UI_ClearNISEndCallback( Void  )
+ 	
+Clears the callback function called at the current NIS. 
+
+ 
+void  UI_CoverPreviewHide( Void  )
+ 	
+Toggle off cover preview. Each call to UI_CoverPreviewHide must be matched by a call to UI_CoverPreviewShow 
+
+ 
+void  UI_CoverPreviewShow( Void  )
+ 	
+Toggle on cover preview. Each call to UI_CoverPreviewShow must be matched by a call to UI_CoverPreviewHide 
+
+ 
+void  UI_CreateColouredEntityKickerMessage( ModPlayer* player, Entity* entity, LocString message, int red, int green, int blue, int alpha )
+ 	
+Create a coloured custom kicker message on the entity and display to the player, rgb values are 0-255. 
+
+ 
+void  UI_CreateColouredPositionKickerMessage( ModPlayer* player, ScarPosition position, LocString message, int red, int green, int blue, int alpha )
+ 	
+Create a coloured custom kicker message on the entity and display to the player, rgb values are 0-255. 
+
+ 
+void  UI_CreateColouredSquadKickerMessage( ModPlayer* player, Squad* squad, LocString message, int red, int green, int blue, int alpha )
+ 	
+Create a coloured custom kicker message on the entity and display to the player, rgb values are 0-255. 
+
+ 
+void  UI_CreateEntityKickerMessage( ModPlayer* player, Entity* entity, LocString message )
+ 	
+Create a custom kicker message on the entity and display to the player. 
+
+ 
+void  UI_CreatePositionKickerMessage( ModPlayer* player, ScarPosition position, LocString message )
+ 	
+Create a custom kicker message on the entity and display to the player. 
+
+ 
+void  UI_CreateSquadKickerMessage( ModPlayer* player, Squad* squad, LocString message )
+ 	
+Create a custom kicker message on the entity and display to the player. 
+
+ 
+void  UI_EnableGameEventCueType( GameEventType gameEventType, bool enable )
+ 	
+Enables or disables event cues. 
+
+ 
+void  UI_EnableResourceTypeKicker( ResourceAmount::ResourceType resourceType, bool enable )
+ 	
+Enables or disables resource kickers. 
+
+ 
+void  UI_EnableUIEventCueType( UIEventType uiEventType, bool enable )
+ 	
+Enables or disables event cues. 
+
+ 
+size_t  UI_FlashAbilityButton( ScarAbilityPBG ability, bool stopOnClick )
+ 	
+Flash an ability command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashConstructionButton( ScarEntityPBG ebp, bool stopOnClick )
+ 	
+Flash a construction item command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashConstructionMenu( const char* menuName, bool stopOnClick )
+ 	
+Flash a construction menu command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+void  UI_FlashEntity( Entity* entity, const char* actionOnName )
+ 	
+Flashes the entity using attributes from [tuning][ui] 
+
+ 
+size_t  UI_FlashEntityCommandButton( EntityCommandType command, bool stopOnClick )
+ 	
+Flash an entity order command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashEventCue( size_t eventCueID, bool stopOnClick )
+ 	
+Flash an event cue item. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashObjectiveCounter( int objectiveID )
+ 	
+Flash an objective counter. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashObjectiveIcon( int objectiveID, bool stopOnClick )
+ 	
+Flash an objective. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashProductionBuildingButton( const char* type, bool stopOnClick )
+ 	
+Flash a production building button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashProductionButton( ProductionItemType type, const PropertyBagGroup* pbg, bool stopOnClick )
+ 	
+Flash a production item command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+size_t  UI_FlashSquadCommandButton( SquadCommandType command, bool stopOnClick )
+ 	
+Flash a squad order command button. Pass the return value to UI_StopFlashing to stop flashing the button. 
+
+ 
+bool  UI_GetDecoratorsEnabled( Void  )
+ 	
+Returns whether all decorators are enabled or not 
+
+ 
+void  UI_HideTacticalMap( Void  )
+ 	
+Hides the tactical map 
+
+ 
+void  UI_HighlightSquad( Squad* squad, float duration )
+ 	
+Turn on squad highlight UI feature for the specified duration. 
+
+ 
+bool  UI_IsTacticalMapShown( Void  )
+ 	
+Returns whether the tactical map is being shown (not strict) 
+
+ 
+void  UI_MessageBoxHide( Relic::COH2UI::ScarSystemConnector::DialogResult button )
+ 	
+If the message box is activated, close it. The callback will receive the button parameter given. 
+
+ 
+void  UI_MessageBoxSetButton( Relic::COH2UI::ScarSystemConnector::DialogResult dialogResult, LocString text, LocString tooltip, bool bEnabled )
+ 	
+Set the text/tooltip/enabled state of a button on the dialog. 
+
+ 
+void  UI_MessageBoxSetText( LocString title, LocString message )
+ 	
+Set the title and message body of the dialog. 
+
+ 
+uint32_t  UI_NewHUDFeature( GameUICore::HUDFeatureType newHUDFeature, LocString featureText, const char* featureIcon, float duration )
+ 	
+Brings up a message and arrow pointing to a HUD feature. 
+
+Call UI_TitleDestroy to remove.
+
+ 
+void  UI_OutOfBoundsLinesHide( Void  )
+ 	
+Toggle off terrain out of bounds lines. Each call to UI_OutOfBoundsLinesHide must be matched by a call to UI_OutOfBoundsLinesShow 
+
+ 
+void  UI_OutOfBoundsLinesShow( Void  )
+ 	
+Toggle on terrain out of bounds lines. Each call to UI_OutOfBoundsLinesShow must be matched by a call to UI_OutOfBoundsLinesShowHide 
+
+ 
+void  UI_RestrictBuildingPlacement( ScarMarker marker )
+ 	
+Only allow buildings to be placed inside a marker. 
+
+ 
+uint32_t  UI_ScreenFade( float r, float g, float b, float a, float duration, bool persistent )
+ 	
+Fades the screen to a given RGBA colour over a number of seconds. mouse input is blocked during the fade, and you can control whether the input keeps being blocked after the fade has ended (be careful!) 
+
+Call UI_TitleDestroy to remove.
+
+ 
+void  UI_SetAbilityCardVisibility( bool visible )
+ 	
+Sets the visibility of the Commander Ability card. 
+
+ 
+void  UI_SetAlliedBandBoxSelection( bool allow )
+ 	
+Sets the game to allow allied squads to be selected at the same time as your own squads 
+
+ 
+void  UI_SetCPMeterVisibility( bool visible )
+ 	
+Sets the visibility of the Command Point meter. 
+
+ 
+void  UI_SetDecoratorsEnabled( bool enabled )
+ 	
+Enables or disables all decorators 
+
+ 
+void  UI_SetForceShowSubtitles( bool forceShowSubtitles )
+ 	
+Sets the game to force show subtitles even if the player has them turned off. 
+
+ 
+void  UI_SetModalAbilityPhaseCallback( LuaConfig::RefFunction function )
+ 	
+Sets a function to be called when the player clicks an ability and gets a targeting UI. Your function will have 2 arguments: [Blueprint] ability blueprint, [integer] phase: MAP_Placing, MAP_Facing (only if ability requires facing) or MAP_Confirmed (not strict) 
+
+ 
+void  UI_SetNISEndCallback( LuaConfig::RefFunction function )
+ 	
+Sets the callback function called at the end of an NIS, note this function is automatically cleared after being called once. 
+
+ 
+void  UI_SetSoviet227Blinking( bool blinking )
+ 	
+Blink the Soviet 227/progression UI 
+
+ 
+void  UI_SetSoviet227Visibility( bool visible )
+ 	
+Sets the visibility of the Soviet 227/progression UI 
+
+ 
+void  UI_ShowTacticalMap( Void  )
+ 	
+Shows the tactical map 
+
+ 
+void  UI_StopFlashing( size_t id )
+ 	
+Stop flashing a flash created with a previous call to UI_Flash*(). 
+
+ 
+void  UI_SystemMessageHide( LocString message )
+ 	
+Removes a message added by Game_ShowSystemMessage. 
+
+ 
+void  UI_SystemMessageShow( LocString message )
+ 	
+Shows a system message in the area where Game Paused text appears. 
+
+Call Game_HideSystemMessage to remove the message.
+
+ 
+void  UI_TerritoryHide( Void  )
+ 	
+Toggle off territory lines. Each call to UI_TerritoryHide must be matched by a call to UI_TerritoryShow 
+
+ 
+void  UI_TerritoryShow( Void  )
+ 	
+Toggle on territory lines. Each call to UI_TerritoryShow must be matched by a call to UI_TerritoryHide 
+
+ 
+void  UI_TitleDestroy( uint32_t id )
+ 	
+Removes a title using an id returned by the title creating function. 
+
+ 
+void  UI_ToggleDecorators( Void  )
+ 	
+Toggles all decorators on or off. 
+
+ 
+void  UI_UnrestrictBuildingPlacement( Void  )
+ 	
+Removes the restriction on building placement. 
+
+ 
+uint32_t  UIWarning_Show( LocString text )
+ 	
+Displays a brief UI warning in the critical alert message area. 
+
+Call UI_TitleDestroy to remove.
+
+ 
+checkID  Util_AddProxCheck( PlayerID/SGroup element, EGroup/SGroup/Pos/MarkerID location, Boolean all, Real range, LuaFunction callback, Int delay )
+ 	
+[DEPRECATED. Use Event_Proximity() instead.] Add a proximity check. 
+
+Checks if ANY or ALL the units in the element are within range of the location. If location is a CIRCLE marker, default range will be max(radius, 5)
+
+ 
+Void  Util_ClearProxChecks( Void  )
+ 	
+[DEPRECATED. DO NOT USE.] Removes all existing proximity checks. 
+
+Clears the list of prox checks that are currently active and shis down the procChecker.
+
+ 
+Void  Util_CreateEntities( PlayerID player, EGroupID egroup, Integer blueprintID, MarkerID/Pos location, Integer numentities[, MarkerID/Pos toward] )
+ 	
+Creates a given number of entities at a location and adds them to an egroup. A PlayerID of nil will create the entities as world objects. 
+
+ 
+SGroup  Util_CreateSquads( PlayerID player, SGroupID/Table/String sgroup, SquadBlueprint/Table sbp, Marker/Pos/SGroup/EGroup spawn_point[, Position destination, Integer numsquads, Integer loadout, Boolean attackmove, Position dest_facing, UpgradeBlueprint/Table upgrades, Position spawn_facing] )
+ 	
+High level function to create squads and give them basic orders upon spawning. Detailed explanation found in ScarUtil.scar 
+
+PlayerID player - player who will own the squads SGroupID/Table/String sgroup - sgroup that receives the new squads. Can be nil if you don't need to manage the new squads or a string if you want to create a new sgroup with that name. If a table is given, the first item will be used as the return sgroup. SquadBlueprint sbp - the blueprint for the new squads. can be a table of blueprints, in which case a random blueprint will be chosen for each squad Position location - where to spawn the squads (can be any parameter type whose position can be queried) SGroup - If the sgroup is a Hold Entity then the squad is spawned inside of it. EGroup - If the egroup is a hold entity then the squad is spawned inside of it. NOTE: if the hold is destroyed, or is full, or due to any other misc. failure case, then the squad is spawned at the player's map entry point. Pos - the squad is spawned at this location. Marker - the squad is spawned at the marker and facing the direciton of the marker. Position destination - (OPTIONAL) where the squads will move to, load into, or attack SGroup can mean two different things, if the Sgroup is owned by the player and a hold then try to enter it. Or if the SGroup is an enemy squad, then the spawned squad should attack move the enemy. If neither is true, then the squad just moves to the location. EGroup should be treated the same as the SGroup. Position/Marker: the squad moves to the location. Sync weapon: the squad captures the sync weapon. Integer numsquads - (OPTIONAL) how many squads to spawn Integer loadout - (OPTIONAL) max amount of units to spawn per squad Boolean attackmove - (OPTIONAL) in cases where the squads do a simple move to their destination (not attacking or loading into anything), this determines whether they attack move or not Position facing - (OPTIONAL) in cases where the squads do a simple move to their destination, this determines their facing once they reach their destination. If facing is not specified, and the squad is moving to a marker, the marker's facing is used. UpgradeBlueprint upgrades - (OPTIONAL) upgrade(s) to instantly apply to squads when they spawn
+
+ 	Source: [coh2\BIA\root\CoH2\Data\Scar/ScarUtil.scar] (711) 
+References: [Util_CreateSquads]
+
+Real  Util_GetDistance( entity/squad/egroup/sgroup/marker/pos Object1, entity/squad/egroup/sgroup/marker/pos Object2 )
+ 	
+Returns the distance between two objects 
+
+ 
+Position  Util_GetOffsetPosition( entity/squad/egroup/sgroup/marker/position pos, Integer offset, Real distance )
+ 	
+Returns a position relative to a entity/squad/egroup/sgroup/marker/position's current position and orientation. see LuaConsts.scar for explanation of 'offset' parameter. 
+
+ 
+PlayerID  Util_GetPlayerOwner( entity/squad/egroup/sgroup/player Object )
+ 	
+Returns the player owner for any of: entity, squad, egroup, sgroup, player. for groups, the first item is used. Returns nil for world owned or empty groups 
+
+ 
+Integer --> R_ENEMY, R_ALLY, R_NEUTRAL, R_UNDEFINED, or nil (if world owned or invalid parameters)  Util_GetRelationship( entity/squad/egroup/sgroup/player Object_1, entity/squad/egroup/sgroup/player Object_2 )
+ 	
+Gets the relationship between two of: entity, squad, egroup, sgroup, player. for groups, the first item is used. 
+
+ 
+Offset  Util_GetRelativeOffset( entity/squad/egroup/sgroup/marker/position element, entity/squad/egroup/sgroup/marker/position pos )
+ 	
+Returns a relative offset position to an element 
+
+ 
+Void  Util_MonitorTerritory( Table/EGroup terrs, Float captureThreshold, Int timeoutValue, ScarFN callback, ScarFN alertIntel, Table parentObjective )
+ 	
+Monitors a territory point and warns the player if it goes below a certain capture threshold 
+
+Can receive a parent objective to which to attach a subobjective that displays data.
+
+ 
+Void  Util_RemoveProxCheck( EGroup/SGroup/Pos/MarkerID location )
+ 	
+[DEPRECATED. DO NOT USE.] Remove proximity checks assigned to a location.  
+
+Removes all proximity checks associated with the defined location.
+
+ 
+Void  Util_RemoveProxCheckByID( Integer checkID )
+ 	
+[DEPRECATED. DO NOT USE.] Remove a specific proximity check based on its ID. 
+
+ 
+Position, if y-height is nil, y-height = ground height, terrain ground or walkable  Util_ScarPos( Real xpos, Real zpos, Real ypos )
+ 	
+Converts a 2D top down position to a 3D ScarPosition. 
+
+3D ScarPositions have the x axis left to right, the z axis in to out, and the y axis down to up (y axis represents the height of the terrain). Use this function to convert a top-down 2D position to a 3D world position.<BR/><BR/> Note: (0,0) is in the center of the map.
+
+ 
+Void  Util_SetPlayerOwner( entity/squad/egroup/sgroup Object, PlayerID owner[, Boolean bApplyToSquadsHeld=true] )
+ 	
+Sets the player owner for an entity, squad, egroup or sgroup. Also sets player owner of whatever is garrisoned inside them 
+
+ 
+EGroupID  Util_SpawnDemoCharge( PlayerID player, MarkerID/Pos location )
+ 	
+Spawns a demo charge at a position and returns an egroup 
+
+Use this instead of World_SpawnDemolitionCharge if you need to manage it
+
+ 
+Void  Util_StartNIS( String/Integer/LuaFunction NIS[, LuaFunction onComplete, egroup/sgroup/Player/Table hide, LuaFunction preNIS, LuaFunction postNIS, Boolean framedump, Boolean preserveFOW] )
+ 	
+Play an NIS. See confluence link below for more info. 
+
+ 	Source: [coh2\BIA\root\CoH2\Data\Scar/NIS.scar] (20) 
+References: [Scripting+NIS+Transitions]
+
+void  VIS_OccCullToggleOBB( Void  )
+ 	
+toggle the visibility of occlusion culling OBB 
+
+ 
+ 
+
+ 
+
+World
+Functions
+
+Void  Marker_CleanUpTheDead( PlayerID player, MarkerID marker )
+ 	
+Kill off a specific player's dead bodies (enter ALL to clean them all up) in a marker radius 
+
+ 
+void  Weather_SetType( const char* weatherLevelName )
+ 	
+changes the weather state of all objects (options: sunny, lightrain, mediumrain, heavyrain) 
+
+ 
+void  World_AddPilferLockArea( ScarPosition pos, float radius )
+ 	
+Add an area where pilferable weapons won't disappear due to timeout 
+
+ 
+Void  World_CleanUpTheDead( PlayerID player )
+ 	
+Kill off a specific player's dead bodies (enter ALL to clean them all up) 
+
+ 
+void  World_ClearCasualties( Void  )
+ 	
+ 
+void  World_DamageIce( ScarPosition pos, float innerRadius, float outerRadius, float innerDamage, float outerDamage )
+ 	
+Damage a circle of ice with a gradient 
+
+linearly to 50 damage at 10 meters (so 75 damage at 7.5 meters)
+
+ 
+void  World_DestroyWallsNearMarker( ScarMarker marker )
+ 	
+Destroys walls (entities with a wall_ext) near a marker 
+
+ 
+float  World_DistanceEGroupToPoint( EGroup* egroup, ScarPosition p1, bool closest )
+ 	
+Get the distance between a squad group and a point. 
+
+Pass in true for 3rd parameter to get the closest point and pass in false to get the furthest point. The closest/furthest point is calculated on a per entity basis. So the closest distance would be that of the closest entity.<BR/> Also note, it is an error to call this function with an empty group.<BR/>
+
+ 
+float  World_DistancePointToPoint( ScarPosition p1, ScarPosition p2 )
+ 	
+Get the distance between two points. 
+
+ 
+float  World_DistanceSGroupToPoint( SGroup* sgroup, ScarPosition p1, bool closest )
+ 	
+Get the distance between a squad group and a point. 
+
+Pass in true for 3rd parameter to get the closest point and pass in false to get the furthest point. The closest/furthest point is calculated on a per squadron basis. So the closest distance would be that of the closest squadron.<BR/> It is an error to call this function with an empty group. Check the group size with SquadGroup_Count( ) first.
+
+ 
+float  World_DistanceSquaredPointToPoint( ScarPosition p1, ScarPosition p2 )
+ 	
+Get the distance squared between two points. 
+
+ 
+void  World_EnableReplacementObjectForEmptyPlayers( bool enable )
+ 	
+*** You must call this from OnGameSetup, otherwise it's too late *** Determines whether empty players get converted to null resource points. 
+
+see Attribute Editor under tuning/player/empty_player_replacement_object
+
+ 
+void  World_EnableSharedLineOfSight( ModPlayer* p0, ModPlayer* p1, bool enable )
+ 	
+Enables or disables shared line of sight between these two players 
+
+ 
+void  World_EndSP( bool win )
+ 	
+Wins/loses a single team mission for the local teams 
+
+ 
+Variable  World_GetClosest( Variable var, LuaTable items )
+ 	
+Returns the closest object from the table of marker/pos/egroup/sgroup to the closest marker/pos/egroup/sgroup specified 
+
+The table may mix together objects of different types.
+
+ 
+int  World_GetCurrentInteractionStage( Void  )
+ 	
+Returns the current interaction stage (areas painted at this number or lower are currently interactable) 
+
+ 
+int  World_GetEntitiesNearMarker( Player* player, EGroup* egroup, ScarMarker marker, OwnerType ownerType )
+ 	
+Find and add entities near the marker to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+int  World_GetEntitiesNearPoint( Player* player, EGroup* egroup, ScarPosition pos, float radius, OwnerType ownerType )
+ 	
+Find and add entities near the point to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+int  World_GetEntitiesWithinTerritorySector( Player* player, EGroup* egroup, size_t sectorID, OwnerType ownerType )
+ 	
+Find and add entities within the territory sector to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+Entity*  World_GetEntity( int index )
+ 	
+Returns the UniqueID at given index, use with World_GetNumEntities() to iterate through all the entities in the world 
+
+ 
+Variable  World_GetFurthest( Variable var, LuaTable items )
+ 	
+Returns the furthest object from the table of marker/pos/egroup/sgroup to the furthest marker/pos/egroup/sgroup specified. 
+
+The table may mix together objects of different types.
+
+ 
+float  World_GetGameTime( Void  )
+ 	
+Return the total game time in seconds. 
+
+ 
+float  World_GetHeightAt( float x, float y )
+ 	
+returns the height of ground at 2D pos x,y 
+
+ 
+Position  World_GetHiddenPositionOnPath( PlayerID player, MarkerID/Pos origin, MarkerID/Pos destination, Integer checktype )
+ 	
+Find a position on a path hidden from view, as close to the destination as possible whilst still satisfying your hidden checktype. Checktype can be either CHECK_IN_FOW, CHECK_OFFCAMERA or CHECK_BOTH. 
+
+The path is always calculated as if it were plain infantry. This function returns nil if it can't find a suitable position, so you can do a backup plan.
+
+ 
+float  World_GetLength( Void  )
+ 	
+Returns the total playable length of the game world (z coordinate) 
+
+Since the center of the map is 0,0 the world z range is (-l/2 -> l/2)
+
+ 
+ScarPosition  World_GetNearestInteractablePoint( ScarPosition position )
+ 	
+returns the nearest intractable position to the supplied position 
+
+ 
+int  World_GetNeutralEntitiesNearMarker( EGroup* egroup, ScarMarker marker )
+ 	
+Find and add neutral entities near the marker to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+int  World_GetNeutralEntitiesNearPoint( EGroup* egroup, ScarPosition pos, float radius )
+ 	
+Find and add neutral entities near the point to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+int  World_GetNeutralEntitiesWithinTerritorySector( EGroup* egroup, size_t sectorID )
+ 	
+Find and add neutral entities within the territory sector to the egroup 
+
+Entities belonging to a squad would not be added to the egroup
+
+ 
+int  World_GetNumEntities( Void  )
+ 	
+Returns the number of spawned entities in the entire world (use sparingly and never at runtime) 
+
+ 
+int  World_GetNumEntitiesNearPoint( ScarEntityPBG ebp, ScarPosition pos, float radius )
+ 	
+Return the number of entities of the same ebp in the sphere volume 
+
+ 
+int  World_GetNumStrategicPoints( Void  )
+ 	
+Returns the number of strategic points on this map (does not count strat. objectives) 
+
+ 
+int  World_GetNumVictoryPoints( Void  )
+ 	
+Returns the number of strategic objectives on this map 
+
+ 
+ScarPosition  World_GetOffsetPosition( ScarPosition position, ScarPosition heading, int offset, float distance )
+ 	
+Returns a position that is offset a certain distance from the position/heading passed in. see LuaConsts.scar for explanation of 'offset' parameter. 
+
+ 
+Player*  World_GetPlayerAt( uint32_t index )
+ 	
+- Returns the player at a given index, numbers start at one 
+
+ 
+int  World_GetPlayerCount( Void  )
+ 	
+Return the total number of players in the world 
+
+ 
+int  World_GetPlayerIndex( Player* player )
+ 	
+- Returns the player index given the Player* 
+
+ 
+ScarSquadPBG  World_GetPossibleSquadsBlueprint( int race_index, int squad_index )
+ 	
+Returns the blueprint of a chosen squad for a race 
+
+ 
+int  World_GetPossibleSquadsCount( int race_index )
+ 	
+Returns the number of types of squads a race can build 
+
+ 
+uint32_t  World_GetRaceIndex( const char* racename )
+ 	
+Returns the race index of a race, given its name (from the ME). 
+
+ 
+int  World_GetRand( int min, int max )
+ 	
+Returns a random integer with range [min, max] 
+
+It is recomended you use this instead of luas math.random function
+
+ 
+ScarPosition  World_GetSpawnablePosition( ScarPosition around, Entity* entity )
+ 	
+Given any position in the world, this function will return position safe for spawning a given entity 
+
+ 
+int  World_GetSquadsNearMarker( Player* player, SGroup* sgroup, ScarMarker marker, OwnerType ownerType )
+ 	
+Find and add squads near the marker to the sgroup 
+
+This function is faster if radius is small and/or number of squads to search for is large
+
+ 
+int  World_GetSquadsNearPoint( Player* player, SGroup* sgroup, ScarPosition pos, float radius, OwnerType ownerType )
+ 	
+Find and add squads near the point to the sgroup 
+
+This function is faster if radius is small and/or number of squads to search for is large
+
+ 
+int  World_GetSquadsWithinTerritorySector( Player* player, SGroup* sgroup, size_t sectorID, OwnerType ownerType )
+ 	
+Find and add squads within territory sector identified by sector ID 
+
+Owner type could be OT_Player, OT_Ally, OT_Enemy or OT_Neutral
+
+ 
+void  World_GetStrategyPoints( EGroup* group, bool bIncludeVP )
+ 	
+Appends all the strategic resource points to an egroup.  
+
+takes the egroup where you want to put the points, and 2nd parameter is a bool which indicates if you want to include VPs or not If 'group' already contains an entity from 'grouptoadd' it will not be added.<BR/> This function does not clear the contents of 'group'.<BR/> Example: World_GetStrategyPoints(mypointgroup, true) --puts all the points including vps into mypointgroup
+
+ 
+bool  World_GetTeamTerritoryGaps( int sectorid1, int sectorid2, LuaBinding::StackVarTable results )
+ 	
+Returns one or more sector IDs that would connect two unconnected pieces of territory. return value is through a table (since there can be more than one way to connect territory) - each entry in this table is a table of sector IDs. 
+
+Currently only finds single gaps - i.e. if two territories are 'almost' connected.
+
+ 
+int  World_GetTeamVictoryTicker( int teamID )
+ 	
+Returns the number of tickets that this team has 
+
+ 
+size_t  World_GetTerritorySectorID( ScarPosition pos )
+ 	
+Return the sector ID from the position 
+
+ 
+ScarPosition  World_GetTerritorySectorPosition( int sectorID )
+ 	
+Returns the position of a sector based on the capture entity (ex: the fuel point's position) 
+
+ 
+float  World_GetWidth( Void  )
+ 	
+Returns the total playable width of the game world (x coordinate) 
+
+Since the center of the map is 0,0 the world x range is (-w/2 -> w/2)
+
+ 
+void  World_IncreaseInteractionStage( Void  )
+ 	
+Increases current interaction stage by 1 
+
+ 
+bool  World_IsGameOver( Void  )
+ 	
+- to document 
+
+ 
+bool  World_IsInSupply( const ModPlayer* player, ScarPosition pos )
+ 	
+Returns true if position is in-supply for the given player 
+
+ 
+bool  World_IsPointInPlayerTerritory( Player* player, ScarPosition position )
+ 	
+Returns true if position if part of the entity territory 
+
+Note that this does not care if territory is in supply or not
+
+ 
+bool  World_IsTerritorySectorOwnedByPlayer( Player* player, size_t sectorID )
+ 	
+Find if player has ownership to this territory sector. 
+
+Other players on the same team would also have the ownership to the sector
+
+ 
+Boolean  World_IsWinterMap( Void  )
+ 	
+Returns whether the current map is set in winter. Checks if 'g_isWinterMap' is set to true. 
+
+ 
+Boolean  World_OwnsEGroup( EGroupID egroup, Boolean all )
+ 	
+Returns whether ANY or ALL of the entities in the group are owned by the world (i.e. neutral) 
+
+ 
+bool  World_OwnsEntity( Entity* entity )
+ 	
+Returns true if the squad is owned by the world 
+
+ 
+Boolean  World_OwnsSGroup( SGroupID sgroup, Boolean all )
+ 	
+Returns whether ANY or ALL of the squads in the group are owned by the world (i.e. neutral) 
+
+ 
+bool  World_OwnsSquad( Squad* squad )
+ 	
+Returns true if the squad is owned by the world 
+
+ 
+bool  World_PointPointProx( ScarPosition p1, ScarPosition p2, float prox )
+ 	
+Returns true if two world positions are in proximity to each other 
+
+ 
+ScarPosition  World_Pos( float x, float y, float z )
+ 	
+Creates a new Position object. 
+
+A position object is basically a table with an x, y, and z attribute. You can directly access the individual components in the same way that you would access a field in a table.<BR/><BR/> Example:<BR/> --* lua script snip<BR/> local pos = World_Pos(2, 0, 0)<BR/> pos.x = pos.x + 1<BR/> print pos.x -- this will print 3<BR/> --* lua script snip<BR/>
+
+ 
+void  World_RemoveAllResourcePoints( Void  )
+ 	
+Removes all resource and strategic points but not entities with a supply ext NOTE: this could eventually be written as - RemoveAllOfType( type ) which would be more flexible. 
+
+ 
+void  World_RemovePilferLockArea( ScarPosition pos, float radius )
+ 	
+Remove a locked pilfering area, must pass the same pos and radius as when the lock area was created 
+
+ 
+void  World_SetDesignerSupply( ScarPosition point, bool bSupply )
+ 	
+Sets a particular sector in the world as a supply provider (or not) 
+
+ 
+void  World_SetGameOver( Void  )
+ 	
+- to document 
+
+ 
+void  World_SetIceHealingRate( float percentPerSecond )
+ 	
+Set what percent ice heals per second (0.05 means 5% per second) 
+
+ 
+void  World_SetPlayerCustomSkin( ModPlayer* pPlayer, const char* skin )
+ 	
+Change the player's custom skin settings, skin must exist in the AE list of DLC skins 
+
+ 
+void  World_SetPlayerLose( ModPlayer* player )
+ 	
+Sets the player to a lose state, with a reason for losing, and kills the player 
+
+ 
+void  World_SetPlayerWin( ModPlayer* player )
+ 	
+Sets the player and all the members allied to player to a win state, with a reason for winning. Also sets all other players to a lose state, and kills them (if they're not already dead) 
+
+ 
+void  World_SetSnowHealingRate( float percentPerSecond )
+ 	
+Set what percent snow heals per second (0.05 means 5% per second) 
+
+ 
+void  World_SetTeamWin( int team )
+ 	
+Sets every player on a team to a win state, with a reason for winning. Also sets all other players to a lose state, and kills them (if they're not already dead) 
+
+ 
+bool  World_SpawnDemolitionCharge( Player* player, ScarPosition pos )
+ 	
+spawn a demolitions charge at a position, 'player' is the one that owns the demolitions and can detonate them. 
+
+ 
+bool  World_TeamTerritoryPointsConnected( int team_index, ScarPosition p1, ScarPosition p2 )
+ 	
+Returns true if the two points are in the same territory region, and owned by the specified territory team, Returns false otherwise. 
+
+ 
+ 
